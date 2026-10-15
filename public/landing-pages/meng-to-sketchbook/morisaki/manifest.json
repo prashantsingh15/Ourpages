@@ -1,0 +1,594 @@
+[
+  {
+    "left": null,
+    "right": 1,
+    "title": "Title Page (Page 1)",
+    "place": "Cover & Title Page",
+    "pagesLabel": "Page 1",
+    "file": "morisaki/spread-01.jpg"
+  },
+  {
+    "left": 2,
+    "right": 3,
+    "title": "ABOUT THE AUTHOR (pp. 2–3)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 2–3",
+    "file": "morisaki/spread-02.jpg"
+  },
+  {
+    "left": 4,
+    "right": 5,
+    "title": "Contents (pp. 4–5)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 4–5",
+    "file": "morisaki/spread-03.jpg"
+  },
+  {
+    "left": 6,
+    "right": 7,
+    "title": "Part One (pp. 6–7)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 6–7",
+    "file": "morisaki/spread-04.jpg"
+  },
+  {
+    "left": 8,
+    "right": 9,
+    "title": "Pages 8–9",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 8–9",
+    "file": "morisaki/spread-05.jpg"
+  },
+  {
+    "left": 10,
+    "right": 11,
+    "title": "Pages 10–11",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 10–11",
+    "file": "morisaki/spread-06.jpg"
+  },
+  {
+    "left": 12,
+    "right": 13,
+    "title": "Pages 12–13",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 12–13",
+    "file": "morisaki/spread-07.jpg"
+  },
+  {
+    "left": 14,
+    "right": 15,
+    "title": "Pages 14–15",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 14–15",
+    "file": "morisaki/spread-08.jpg"
+  },
+  {
+    "left": 16,
+    "right": 17,
+    "title": "Pages 16–17",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 16–17",
+    "file": "morisaki/spread-09.jpg"
+  },
+  {
+    "left": 18,
+    "right": 19,
+    "title": "Pages 18–19",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 18–19",
+    "file": "morisaki/spread-10.jpg"
+  },
+  {
+    "left": 20,
+    "right": 21,
+    "title": "Pages 20–21",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 20–21",
+    "file": "morisaki/spread-11.jpg"
+  },
+  {
+    "left": 22,
+    "right": 23,
+    "title": "Pages 22–23",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 22–23",
+    "file": "morisaki/spread-12.jpg"
+  },
+  {
+    "left": 24,
+    "right": 25,
+    "title": "Pages 24–25",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 24–25",
+    "file": "morisaki/spread-13.jpg"
+  },
+  {
+    "left": 26,
+    "right": 27,
+    "title": "Pages 26–27",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 26–27",
+    "file": "morisaki/spread-14.jpg"
+  },
+  {
+    "left": 28,
+    "right": 29,
+    "title": "Pages 28–29",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 28–29",
+    "file": "morisaki/spread-15.jpg"
+  },
+  {
+    "left": 30,
+    "right": 31,
+    "title": "Pages 30–31",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 30–31",
+    "file": "morisaki/spread-16.jpg"
+  },
+  {
+    "left": 32,
+    "right": 33,
+    "title": "Pages 32–33",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 32–33",
+    "file": "morisaki/spread-17.jpg"
+  },
+  {
+    "left": 34,
+    "right": 35,
+    "title": "Pages 34–35",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 34–35",
+    "file": "morisaki/spread-18.jpg"
+  },
+  {
+    "left": 36,
+    "right": 37,
+    "title": "Pages 36–37",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 36–37",
+    "file": "morisaki/spread-19.jpg"
+  },
+  {
+    "left": 38,
+    "right": 39,
+    "title": "Pages 38–39",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 38–39",
+    "file": "morisaki/spread-20.jpg"
+  },
+  {
+    "left": 40,
+    "right": 41,
+    "title": "Pages 40–41",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 40–41",
+    "file": "morisaki/spread-21.jpg"
+  },
+  {
+    "left": 42,
+    "right": 43,
+    "title": "Pages 42–43",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 42–43",
+    "file": "morisaki/spread-22.jpg"
+  },
+  {
+    "left": 44,
+    "right": 45,
+    "title": "Pages 44–45",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 44–45",
+    "file": "morisaki/spread-23.jpg"
+  },
+  {
+    "left": 46,
+    "right": 47,
+    "title": "contents (pp. 46–47)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 46–47",
+    "file": "morisaki/spread-24.jpg"
+  },
+  {
+    "left": 48,
+    "right": 49,
+    "title": "Pages 48–49",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 48–49",
+    "file": "morisaki/spread-25.jpg"
+  },
+  {
+    "left": 50,
+    "right": 51,
+    "title": "Pages 50–51",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 50–51",
+    "file": "morisaki/spread-26.jpg"
+  },
+  {
+    "left": 52,
+    "right": 53,
+    "title": "Pages 52–53",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 52–53",
+    "file": "morisaki/spread-27.jpg"
+  },
+  {
+    "left": 54,
+    "right": 55,
+    "title": "Pages 54–55",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 54–55",
+    "file": "morisaki/spread-28.jpg"
+  },
+  {
+    "left": 56,
+    "right": 57,
+    "title": "Pages 56–57",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 56–57",
+    "file": "morisaki/spread-29.jpg"
+  },
+  {
+    "left": 58,
+    "right": 59,
+    "title": "Pages 58–59",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 58–59",
+    "file": "morisaki/spread-30.jpg"
+  },
+  {
+    "left": 60,
+    "right": 61,
+    "title": "Pages 60–61",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 60–61",
+    "file": "morisaki/spread-31.jpg"
+  },
+  {
+    "left": 62,
+    "right": 63,
+    "title": "Part Two (pp. 62–63)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 62–63",
+    "file": "morisaki/spread-32.jpg"
+  },
+  {
+    "left": 64,
+    "right": 65,
+    "title": "Pages 64–65",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 64–65",
+    "file": "morisaki/spread-33.jpg"
+  },
+  {
+    "left": 66,
+    "right": 67,
+    "title": "Pages 66–67",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 66–67",
+    "file": "morisaki/spread-34.jpg"
+  },
+  {
+    "left": 68,
+    "right": 69,
+    "title": "Pages 68–69",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 68–69",
+    "file": "morisaki/spread-35.jpg"
+  },
+  {
+    "left": 70,
+    "right": 71,
+    "title": "Pages 70–71",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 70–71",
+    "file": "morisaki/spread-36.jpg"
+  },
+  {
+    "left": 72,
+    "right": 73,
+    "title": "Pages 72–73",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 72–73",
+    "file": "morisaki/spread-37.jpg"
+  },
+  {
+    "left": 74,
+    "right": 75,
+    "title": "Pages 74–75",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 74–75",
+    "file": "morisaki/spread-38.jpg"
+  },
+  {
+    "left": 76,
+    "right": 77,
+    "title": "Pages 76–77",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 76–77",
+    "file": "morisaki/spread-39.jpg"
+  },
+  {
+    "left": 78,
+    "right": 79,
+    "title": "Pages 78–79",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 78–79",
+    "file": "morisaki/spread-40.jpg"
+  },
+  {
+    "left": 80,
+    "right": 81,
+    "title": "Pages 80–81",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 80–81",
+    "file": "morisaki/spread-41.jpg"
+  },
+  {
+    "left": 82,
+    "right": 83,
+    "title": "Pages 82–83",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 82–83",
+    "file": "morisaki/spread-42.jpg"
+  },
+  {
+    "left": 84,
+    "right": 85,
+    "title": "Pages 84–85",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 84–85",
+    "file": "morisaki/spread-43.jpg"
+  },
+  {
+    "left": 86,
+    "right": 87,
+    "title": "Pages 86–87",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 86–87",
+    "file": "morisaki/spread-44.jpg"
+  },
+  {
+    "left": 88,
+    "right": 89,
+    "title": "Pages 88–89",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 88–89",
+    "file": "morisaki/spread-45.jpg"
+  },
+  {
+    "left": 90,
+    "right": 91,
+    "title": "Pages 90–91",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 90–91",
+    "file": "morisaki/spread-46.jpg"
+  },
+  {
+    "left": 92,
+    "right": 93,
+    "title": "Pages 92–93",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 92–93",
+    "file": "morisaki/spread-47.jpg"
+  },
+  {
+    "left": 94,
+    "right": 95,
+    "title": "Pages 94–95",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 94–95",
+    "file": "morisaki/spread-48.jpg"
+  },
+  {
+    "left": 96,
+    "right": 97,
+    "title": "Pages 96–97",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 96–97",
+    "file": "morisaki/spread-49.jpg"
+  },
+  {
+    "left": 98,
+    "right": 99,
+    "title": "Pages 98–99",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 98–99",
+    "file": "morisaki/spread-50.jpg"
+  },
+  {
+    "left": 100,
+    "right": 101,
+    "title": "Pages 100–101",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 100–101",
+    "file": "morisaki/spread-51.jpg"
+  },
+  {
+    "left": 102,
+    "right": 103,
+    "title": "Pages 102–103",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 102–103",
+    "file": "morisaki/spread-52.jpg"
+  },
+  {
+    "left": 104,
+    "right": 105,
+    "title": "Pages 104–105",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 104–105",
+    "file": "morisaki/spread-53.jpg"
+  },
+  {
+    "left": 106,
+    "right": 107,
+    "title": "Pages 106–107",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 106–107",
+    "file": "morisaki/spread-54.jpg"
+  },
+  {
+    "left": 108,
+    "right": 109,
+    "title": "Pages 108–109",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 108–109",
+    "file": "morisaki/spread-55.jpg"
+  },
+  {
+    "left": 110,
+    "right": 111,
+    "title": "Pages 110–111",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 110–111",
+    "file": "morisaki/spread-56.jpg"
+  },
+  {
+    "left": 112,
+    "right": 113,
+    "title": "Pages 112–113",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 112–113",
+    "file": "morisaki/spread-57.jpg"
+  },
+  {
+    "left": 114,
+    "right": 115,
+    "title": "Pages 114–115",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 114–115",
+    "file": "morisaki/spread-58.jpg"
+  },
+  {
+    "left": 116,
+    "right": 117,
+    "title": "Pages 116–117",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 116–117",
+    "file": "morisaki/spread-59.jpg"
+  },
+  {
+    "left": 118,
+    "right": 119,
+    "title": "Pages 118–119",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 118–119",
+    "file": "morisaki/spread-60.jpg"
+  },
+  {
+    "left": 120,
+    "right": 121,
+    "title": "Pages 120–121",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 120–121",
+    "file": "morisaki/spread-61.jpg"
+  },
+  {
+    "left": 122,
+    "right": 123,
+    "title": "Pages 122–123",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 122–123",
+    "file": "morisaki/spread-62.jpg"
+  },
+  {
+    "left": 124,
+    "right": 125,
+    "title": "Pages 124–125",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 124–125",
+    "file": "morisaki/spread-63.jpg"
+  },
+  {
+    "left": 126,
+    "right": 127,
+    "title": "Pages 126–127",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 126–127",
+    "file": "morisaki/spread-64.jpg"
+  },
+  {
+    "left": 128,
+    "right": 129,
+    "title": "chapter 4 (pp. 128–129)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 128–129",
+    "file": "morisaki/spread-65.jpg"
+  },
+  {
+    "left": 130,
+    "right": 131,
+    "title": "Pages 130–131",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 130–131",
+    "file": "morisaki/spread-66.jpg"
+  },
+  {
+    "left": 132,
+    "right": 133,
+    "title": "Pages 132–133",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 132–133",
+    "file": "morisaki/spread-67.jpg"
+  },
+  {
+    "left": 134,
+    "right": 135,
+    "title": "Pages 134–135",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 134–135",
+    "file": "morisaki/spread-68.jpg"
+  },
+  {
+    "left": 136,
+    "right": 137,
+    "title": "contents (pp. 136–137)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 136–137",
+    "file": "morisaki/spread-69.jpg"
+  },
+  {
+    "left": 138,
+    "right": 139,
+    "title": "Pages 138–139",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 138–139",
+    "file": "morisaki/spread-70.jpg"
+  },
+  {
+    "left": 140,
+    "right": 141,
+    "title": "Pages 140–141",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 140–141",
+    "file": "morisaki/spread-71.jpg"
+  },
+  {
+    "left": 142,
+    "right": 143,
+    "title": "Pages 142–143",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 142–143",
+    "file": "morisaki/spread-72.jpg"
+  },
+  {
+    "left": 144,
+    "right": 145,
+    "title": "contents (pp. 144–145)",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 144–145",
+    "file": "morisaki/spread-73.jpg"
+  },
+  {
+    "left": 146,
+    "right": 147,
+    "title": "Pages 146–147",
+    "place": "Morisaki Bookshop",
+    "pagesLabel": "pp. 146–147",
+    "file": "morisaki/spread-74.jpg"
+  }
+]

@@ -538,6 +538,12 @@ button{font:inherit}
 
   <section id="plates" class="plates">
     <p class="section-label" id="indexLabel">Chapters & Pages · Satoshi Yagisawa</p>
+    <div id="pageJumpBar" class="page-jump-bar" style="display:flex;align-items:center;gap:10px;margin:12px 0 20px;flex-wrap:wrap;background:rgba(255,252,244,0.7);padding:8px 16px;border-radius:8px;border:1px solid var(--hairline);width:fit-content;">
+      <span style="font-size:13px;color:var(--ink);font-family:var(--font);font-weight:400;">Jump directly to Page (1–147):</span>
+      <input type="number" id="pageJumpInput" min="1" max="147" placeholder="e.g. 45" style="width:75px;padding:5px 8px;border:1px solid var(--hairline);border-radius:4px;background:#fff;font-family:var(--font);font-size:13px;" />
+      <button id="pageJumpBtn" style="padding:5px 14px;background:var(--ink);color:#fff;border:0;border-radius:4px;font-family:var(--font);font-size:12.5px;cursor:pointer;">Read Page</button>
+      <span id="jumpFeedback" style="font-size:12px;opacity:0.7;font-family:var(--font);"></span>
+    </div>
     <ol class="plate-list" id="plateList"></ol>
   </section>
 
@@ -556,23 +562,377 @@ button{font:inherit}
 const Q=new URLSearchParams(location.search);
 const DIR='meng-to-sketchbook/';
 
-const MORISAKI_PAGES=[
-  {file:'morisaki/spread-01.png', title:'Days at the Morisaki Bookshop', place:'Jinbōchō, Tokyo'},
-  {file:'morisaki/spread-02.png', title:'About the Author', place:'Satoshi Yagisawa'},
-  {file:'morisaki/spread-03.png', title:'Table of Contents', place:'Part One & Part Two'},
-  {file:'morisaki/spread-04.png', title:'Part One · Chapter 1', place:'Morisaki Bookshop'},
-  {file:'morisaki/spread-05.png', title:'Chapter 1 · The Phone Call', place:'Jinbōchō'},
-  {file:'morisaki/spread-06.png', title:'Chapter 1 · The Old Room', place:'Among the Shelves'},
-  {file:'morisaki/spread-07.png', title:'Chapter 1 · A Mountain of Books', place:'Second-hand Books'},
-  {file:'morisaki/spread-08.png', title:'Chapter 2 · Waking Up in Jinbōchō', place:'Book Town'},
-  {file:'morisaki/spread-09.png', title:'Chapter 2 · Uncle Satoru', place:'Morisaki Books'},
-  {file:'morisaki/spread-10.png', title:'Chapter 2 · The Regulars', place:'Jinbōchō Alley'},
-  {file:'morisaki/spread-11.png', title:'Chapter 2 · Sorting Old Novels', place:'Morisaki Shelves'},
-  {file:'morisaki/spread-12.png', title:'Chapter 2 · Tea and Silence', place:'Upstairs Room'},
-  {file:'morisaki/spread-13.png', title:'Chapter 3 · The Rhythm of the Shop', place:'Morisaki Bookshop'},
-  {file:'morisaki/spread-14.png', title:'Chapter 3 · Sabu-san Drops By', place:'Tokyo Afternoon'},
-  {file:'morisaki/spread-15.png', title:'Chapter 4 · Late Summer Nights', place:'Second Floor Window'},
-  {file:'morisaki/spread-16.png', title:'Chapter 4 · Stories Shared', place:'Jinbōchō at Dusk'}
+const MORISAKI_PAGES = [
+  {
+    "file": "morisaki/spread-01.jpg",
+    "title": "Title Page (Page 1)",
+    "place": "Cover & Title Page"
+  },
+  {
+    "file": "morisaki/spread-02.jpg",
+    "title": "ABOUT THE AUTHOR (pp. 2\u20133)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-03.jpg",
+    "title": "Contents (pp. 4\u20135)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-04.jpg",
+    "title": "Part One (pp. 6\u20137)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-05.jpg",
+    "title": "Pages 8\u20139",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-06.jpg",
+    "title": "Pages 10\u201311",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-07.jpg",
+    "title": "Pages 12\u201313",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-08.jpg",
+    "title": "Pages 14\u201315",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-09.jpg",
+    "title": "Pages 16\u201317",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-10.jpg",
+    "title": "Pages 18\u201319",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-11.jpg",
+    "title": "Pages 20\u201321",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-12.jpg",
+    "title": "Pages 22\u201323",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-13.jpg",
+    "title": "Pages 24\u201325",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-14.jpg",
+    "title": "Pages 26\u201327",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-15.jpg",
+    "title": "Pages 28\u201329",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-16.jpg",
+    "title": "Pages 30\u201331",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-17.jpg",
+    "title": "Pages 32\u201333",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-18.jpg",
+    "title": "Pages 34\u201335",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-19.jpg",
+    "title": "Pages 36\u201337",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-20.jpg",
+    "title": "Pages 38\u201339",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-21.jpg",
+    "title": "Pages 40\u201341",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-22.jpg",
+    "title": "Pages 42\u201343",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-23.jpg",
+    "title": "Pages 44\u201345",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-24.jpg",
+    "title": "contents (pp. 46\u201347)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-25.jpg",
+    "title": "Pages 48\u201349",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-26.jpg",
+    "title": "Pages 50\u201351",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-27.jpg",
+    "title": "Pages 52\u201353",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-28.jpg",
+    "title": "Pages 54\u201355",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-29.jpg",
+    "title": "Pages 56\u201357",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-30.jpg",
+    "title": "Pages 58\u201359",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-31.jpg",
+    "title": "Pages 60\u201361",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-32.jpg",
+    "title": "Part Two (pp. 62\u201363)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-33.jpg",
+    "title": "Pages 64\u201365",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-34.jpg",
+    "title": "Pages 66\u201367",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-35.jpg",
+    "title": "Pages 68\u201369",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-36.jpg",
+    "title": "Pages 70\u201371",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-37.jpg",
+    "title": "Pages 72\u201373",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-38.jpg",
+    "title": "Pages 74\u201375",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-39.jpg",
+    "title": "Pages 76\u201377",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-40.jpg",
+    "title": "Pages 78\u201379",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-41.jpg",
+    "title": "Pages 80\u201381",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-42.jpg",
+    "title": "Pages 82\u201383",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-43.jpg",
+    "title": "Pages 84\u201385",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-44.jpg",
+    "title": "Pages 86\u201387",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-45.jpg",
+    "title": "Pages 88\u201389",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-46.jpg",
+    "title": "Pages 90\u201391",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-47.jpg",
+    "title": "Pages 92\u201393",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-48.jpg",
+    "title": "Pages 94\u201395",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-49.jpg",
+    "title": "Pages 96\u201397",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-50.jpg",
+    "title": "Pages 98\u201399",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-51.jpg",
+    "title": "Pages 100\u2013101",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-52.jpg",
+    "title": "Pages 102\u2013103",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-53.jpg",
+    "title": "Pages 104\u2013105",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-54.jpg",
+    "title": "Pages 106\u2013107",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-55.jpg",
+    "title": "Pages 108\u2013109",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-56.jpg",
+    "title": "Pages 110\u2013111",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-57.jpg",
+    "title": "Pages 112\u2013113",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-58.jpg",
+    "title": "Pages 114\u2013115",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-59.jpg",
+    "title": "Pages 116\u2013117",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-60.jpg",
+    "title": "Pages 118\u2013119",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-61.jpg",
+    "title": "Pages 120\u2013121",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-62.jpg",
+    "title": "Pages 122\u2013123",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-63.jpg",
+    "title": "Pages 124\u2013125",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-64.jpg",
+    "title": "Pages 126\u2013127",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-65.jpg",
+    "title": "chapter 4 (pp. 128\u2013129)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-66.jpg",
+    "title": "Pages 130\u2013131",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-67.jpg",
+    "title": "Pages 132\u2013133",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-68.jpg",
+    "title": "Pages 134\u2013135",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-69.jpg",
+    "title": "contents (pp. 136\u2013137)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-70.jpg",
+    "title": "Pages 138\u2013139",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-71.jpg",
+    "title": "Pages 140\u2013141",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-72.jpg",
+    "title": "Pages 142\u2013143",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-73.jpg",
+    "title": "contents (pp. 144\u2013145)",
+    "place": "Morisaki Bookshop"
+  },
+  {
+    "file": "morisaki/spread-74.jpg",
+    "title": "Pages 146\u2013147",
+    "place": "Morisaki Bookshop"
+  }
 ];
 MORISAKI_PAGES.forEach(p=>p.url=DIR+p.file);
 
@@ -696,12 +1056,18 @@ function paint(){
 function caption(){
   capBox.textContent='';
   capOut=capIn=null;
+  const isMorisaki = (PAGES === MORISAKI_PAGES);
   if(turn){
-    capOut=el('p','sb-caption live');capOut.textContent=PAGES[turn.from].title;capBox.appendChild(capOut);
-    capIn=el('p','sb-caption live');capIn.textContent=PAGES[turn.to].title;capBox.appendChild(capIn);
+    const fromInfo = isMorisaki ? (' · [' + (turn.from + 1) + '/' + M + ']') : (' · [' + (turn.from + 1) + '/' + M + ']');
+    const toInfo = isMorisaki ? (' · [' + (turn.to + 1) + '/' + M + ']') : (' · [' + (turn.to + 1) + '/' + M + ']');
+    capOut=el('p','sb-caption live');capOut.innerHTML=PAGES[turn.from].title + '<span style="opacity:0.6;font-size:0.85em;margin-left:6px;">' + fromInfo + '</span>';capBox.appendChild(capOut);
+    capIn=el('p','sb-caption live');capIn.innerHTML=PAGES[turn.to].title + '<span style="opacity:0.6;font-size:0.85em;margin-left:6px;">' + toInfo + '</span>';capBox.appendChild(capIn);
     fadeCaption(turn.t);
   }else{
-    const p=el('p','sb-caption');p.textContent=PAGES[idx].title;capBox.appendChild(p);
+    const p=el('p','sb-caption');
+    const info = isMorisaki ? (' · [Spread ' + (idx + 1) + ' of ' + M + ' · 147 Pages]') : (' · [Plate ' + (idx + 1) + ' of ' + M + ']');
+    p.innerHTML=PAGES[idx].title + '<span style="opacity:0.6;font-size:0.85em;margin-left:8px;">' + info + '</span>';
+    capBox.appendChild(p);
   }
 }
 let capOut=null,capIn=null;
@@ -1076,6 +1442,31 @@ function selectCollection(key){
 if(tabMorisaki) tabMorisaki.onclick = () => selectCollection('morisaki');
 if(tabSketchbook) tabSketchbook.onclick = () => selectCollection('sketchbook');
 sb3d.style.setProperty('--book-ratio','1836 / 1188');
+
+const pageJumpInput = document.getElementById('pageJumpInput');
+const pageJumpBtn = document.getElementById('pageJumpBtn');
+const jumpFeedback = document.getElementById('jumpFeedback');
+const pageJumpBar = document.getElementById('pageJumpBar');
+
+function doJump(){
+  if(!pageJumpInput)return;
+  const p = parseInt(pageJumpInput.value, 10);
+  if(isNaN(p) || p < 1 || p > 147){
+    if(jumpFeedback) jumpFeedback.textContent = 'Enter page 1–147';
+    return;
+  }
+  if(PAGES !== MORISAKI_PAGES) selectCollection('morisaki');
+  const spreadIdx = (p <= 1) ? 0 : Math.floor(p / 2);
+  if(jumpFeedback) jumpFeedback.textContent = 'Opened Page ' + p;
+  goTo(Math.min(PAGES.length - 1, spreadIdx));
+  document.getElementById('sketchbook').scrollIntoView({behavior:'smooth',block:'center'});
+}
+if(pageJumpBtn) pageJumpBtn.onclick = doJump;
+if(pageJumpInput){
+  pageJumpInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') doJump();
+  });
+}
 function marks(){
   const cur=turn?turn.to:idx;
   plateList.querySelectorAll('.plate').forEach((b,i)=>b.setAttribute('aria-current',i===cur?'true':'false'));
