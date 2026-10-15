@@ -142,7 +142,29 @@ button{font:inherit}
   transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--zoom,1));
   will-change:transform;
 }
-.sb-book{position:relative;width:100%;aspect-ratio:1760/1240;transform-style:preserve-3d;z-index:1}
+.sb-book{position:relative;width:100%;aspect-ratio:var(--book-ratio,1836/1188);transform-style:preserve-3d;z-index:1}
+.book-switcher{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:6px;background:rgba(255,252,244,.75);
+  border:1px solid var(--hairline);border-radius:999px;
+  padding:4px;margin:12px auto 8px;backdrop-filter:blur(6px);
+  box-shadow:0 2px 8px rgba(43,39,33,.06);position:relative;z-index:10;
+}
+.book-tab{
+  font-family:var(--font);font-size:13px;font-weight:400;letter-spacing:.02em;
+  background:transparent;border:0;color:var(--ink-soft);
+  padding:6px 15px;border-radius:999px;cursor:pointer;
+  transition:all .2s ease;
+}
+.book-tab:hover{color:var(--ink)}
+.book-tab.active{
+  background:var(--ink);color:#faf7f0;
+  box-shadow:0 2px 6px rgba(43,39,33,.18);font-weight:500;
+}
+@media (max-width:640px){
+  .book-switcher{margin:8px auto 4px;scale:.94}
+  .book-tab{font-size:11.5px;padding:5px 11px}
+}
 
 /* The book sits on a surface, so its shadow is a soft pool underneath —
    no box, no filter on the artwork, nothing with an edge of its own.
@@ -449,6 +471,10 @@ button{font:inherit}
     <img class="botany r" src="meng-to-sketchbook/botany-right.png" alt="" aria-hidden="true">
 
     <p class="hero-kicker">WORDS / FEELINGS / TOGETHERNESS · BHOPAL</p>
+    <div class="book-switcher" role="tablist" aria-label="select book to read">
+      <button class="book-tab active" id="tabMorisaki" role="tab" aria-selected="true">📖 Days at the Morisaki Bookshop</button>
+      <button class="book-tab" id="tabSketchbook" role="tab" aria-selected="false">🎨 Singapore Sketchbook</button>
+    </div>
 
     <div class="sb-wrap" id="sbWrap">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -511,7 +537,7 @@ button{font:inherit}
   <div class="rule short" aria-hidden="true"></div>
 
   <section id="plates" class="plates">
-    <p class="section-label">Plates</p>
+    <p class="section-label" id="indexLabel">Chapters & Pages · Satoshi Yagisawa</p>
     <ol class="plate-list" id="plateList"></ol>
   </section>
 
@@ -529,7 +555,28 @@ button{font:inherit}
    ===================================================================== */
 const Q=new URLSearchParams(location.search);
 const DIR='meng-to-sketchbook/';
-const PAGES=[
+
+const MORISAKI_PAGES=[
+  {file:'morisaki/spread-01.png', title:'Days at the Morisaki Bookshop', place:'Jinbōchō, Tokyo'},
+  {file:'morisaki/spread-02.png', title:'About the Author', place:'Satoshi Yagisawa'},
+  {file:'morisaki/spread-03.png', title:'Table of Contents', place:'Part One & Part Two'},
+  {file:'morisaki/spread-04.png', title:'Part One · Chapter 1', place:'Morisaki Bookshop'},
+  {file:'morisaki/spread-05.png', title:'Chapter 1 · The Phone Call', place:'Jinbōchō'},
+  {file:'morisaki/spread-06.png', title:'Chapter 1 · The Old Room', place:'Among the Shelves'},
+  {file:'morisaki/spread-07.png', title:'Chapter 1 · A Mountain of Books', place:'Second-hand Books'},
+  {file:'morisaki/spread-08.png', title:'Chapter 2 · Waking Up in Jinbōchō', place:'Book Town'},
+  {file:'morisaki/spread-09.png', title:'Chapter 2 · Uncle Satoru', place:'Morisaki Books'},
+  {file:'morisaki/spread-10.png', title:'Chapter 2 · The Regulars', place:'Jinbōchō Alley'},
+  {file:'morisaki/spread-11.png', title:'Chapter 2 · Sorting Old Novels', place:'Morisaki Shelves'},
+  {file:'morisaki/spread-12.png', title:'Chapter 2 · Tea and Silence', place:'Upstairs Room'},
+  {file:'morisaki/spread-13.png', title:'Chapter 3 · The Rhythm of the Shop', place:'Morisaki Bookshop'},
+  {file:'morisaki/spread-14.png', title:'Chapter 3 · Sabu-san Drops By', place:'Tokyo Afternoon'},
+  {file:'morisaki/spread-15.png', title:'Chapter 4 · Late Summer Nights', place:'Second Floor Window'},
+  {file:'morisaki/spread-16.png', title:'Chapter 4 · Stories Shared', place:'Jinbōchō at Dusk'}
+];
+MORISAKI_PAGES.forEach(p=>p.url=DIR+p.file);
+
+const SKETCHBOOK_PAGES=[
   {file:'marina-bay-sands.png',   title:'Marina Bay Sands',          place:'Bayfront'},
   {file:'gardens-by-the-bay.png', title:'Gardens by the Bay',        place:'Supertree Grove'},
   {file:'merlion.png',            title:'The Merlion',               place:'Merlion Park'},
@@ -540,8 +587,11 @@ const PAGES=[
   {file:'singapore-river.png',    title:'Singapore River',           place:'Boat Quay'},
   {file:'botanic-gardens.png',    title:'Botanic Gardens',           place:'Tanglin'}
 ];
-PAGES.forEach(p=>p.url=DIR+p.file);
-const M=PAGES.length, LAND=6;
+SKETCHBOOK_PAGES.forEach(p=>p.url=DIR+p.file);
+
+let PAGES = MORISAKI_PAGES;
+let M = PAGES.length;
+const LAND = 0;
 
 const wrap=document.getElementById('sbWrap');
 const stage=document.getElementById('sbStage');
@@ -980,16 +1030,52 @@ zOutBtn.onclick=()=>{setView(view.trx,view.try_,view.tz/1.16);hideHint();};
 
 /* --------------------------------------------------------- the index */
 const plateList=document.getElementById('plateList');
-PAGES.forEach((p,i)=>{
-  const li=el('li');
-  const b=el('button','plate');
-  b.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span>'+
-              '<span class="t"></span><span class="p"></span>';
-  b.querySelector('.t').textContent=p.title;
-  b.querySelector('.p').textContent=p.place;
-  b.onclick=()=>{goTo(i);document.getElementById('sketchbook').scrollIntoView({behavior:'smooth',block:'center'});};
-  li.appendChild(b);plateList.appendChild(li);
-});
+function rebuildIndex(){
+  if(!plateList)return;
+  plateList.innerHTML='';
+  PAGES.forEach((p,i)=>{
+    const li=el('li');
+    const b=el('button','plate');
+    b.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span>'+
+                '<span class="t"></span><span class="p"></span>';
+    b.querySelector('.t').textContent=p.title;
+    b.querySelector('.p').textContent=p.place;
+    b.onclick=()=>{goTo(i);document.getElementById('sketchbook').scrollIntoView({behavior:'smooth',block:'center'});};
+    li.appendChild(b);plateList.appendChild(li);
+  });
+}
+rebuildIndex();
+
+/* ------------------------------------------------ Book collection switcher */
+const tabMorisaki = document.getElementById('tabMorisaki');
+const tabSketchbook = document.getElementById('tabSketchbook');
+const indexLabel = document.getElementById('indexLabel');
+
+function selectCollection(key){
+  if(key==='morisaki'){
+    PAGES = MORISAKI_PAGES;
+    M = PAGES.length;
+    if(indexLabel) indexLabel.textContent = 'Chapters & Pages · Satoshi Yagisawa';
+    if(tabMorisaki) { tabMorisaki.classList.add('active'); tabMorisaki.setAttribute('aria-selected','true'); }
+    if(tabSketchbook) { tabSketchbook.classList.remove('active'); tabSketchbook.setAttribute('aria-selected','false'); }
+    sb3d.style.setProperty('--book-ratio','1836 / 1188');
+  } else {
+    PAGES = SKETCHBOOK_PAGES;
+    M = PAGES.length;
+    if(indexLabel) indexLabel.textContent = 'Plates · Singapore Sketchbook';
+    if(tabSketchbook) { tabSketchbook.classList.add('active'); tabSketchbook.setAttribute('aria-selected','true'); }
+    if(tabMorisaki) { tabMorisaki.classList.remove('active'); tabMorisaki.setAttribute('aria-selected','false'); }
+    sb3d.style.setProperty('--book-ratio','1760 / 1240');
+  }
+  idx = 0;
+  turn = null;
+  rebuildIndex();
+  paint();
+}
+
+if(tabMorisaki) tabMorisaki.onclick = () => selectCollection('morisaki');
+if(tabSketchbook) tabSketchbook.onclick = () => selectCollection('sketchbook');
+sb3d.style.setProperty('--book-ratio','1836 / 1188');
 function marks(){
   const cur=turn?turn.to:idx;
   plateList.querySelectorAll('.plate').forEach((b,i)=>b.setAttribute('aria-current',i===cur?'true':'false'));
