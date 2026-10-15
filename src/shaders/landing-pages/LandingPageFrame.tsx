@@ -148,6 +148,7 @@ export function LandingPageFrame({
         title={title}
         {...(srcDoc ? { srcDoc } : { src: sourceUrl })}
         sandbox={srcDoc ? SRCDOC_FRAME_SANDBOX : URL_FRAME_SANDBOX}
+        allow="microphone; autoplay"
         loading="eager"
         onLoad={(event) => {
           applyPageCustomization(event.currentTarget, customization);

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OurPages — Bhopal</title>
 <meta name="description" content="designer, creator, AI educator — Singapore">
+<script src="meng-to-sketchbook/peerjs.min.js"></script>
 <style>
 @font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;
   src:url(meng-to-sketchbook/instrument-serif.woff2) format('woff2')}
@@ -445,6 +446,146 @@ button{font:inherit}
 
 .foot{font-size:11.5px;letter-spacing:var(--track-caps);text-transform:uppercase;
   color:var(--ink-faint);text-align:center;padding-bottom:44px}
+
+/* ------------------------------------------------ Shared Reading Room & Voice */
+.reading-room-wrapper{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;margin:2px auto 14px;position:relative;z-index:15;width:100%;max-width:820px;padding:0 16px;
+}
+.reading-room-bar{
+  display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:8px;background:rgba(255,252,244,.85);border:1px solid var(--hairline);
+  border-radius:999px;padding:5px 14px;backdrop-filter:blur(8px);
+  box-shadow:0 2px 10px rgba(43,39,33,.06);font-family:var(--font);transition:all .3s ease;
+}
+.reading-room-bar.idle{padding:4px 12px}
+.room-actions{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.room-pill-btn{
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--font);
+  font-size:12.5px;font-weight:400;letter-spacing:.02em;background:transparent;
+  border:1px solid var(--hairline);color:var(--ink);padding:5px 13px;border-radius:999px;
+  cursor:pointer;transition:all .2s ease;-webkit-tap-highlight-color:transparent;
+}
+.room-pill-btn:hover{background:rgba(43,39,33,.06);border-color:rgba(43,39,33,.25)}
+.room-pill-btn.primary{
+  background:var(--ink);color:#faf7f0;border-color:var(--ink);font-weight:500;
+  box-shadow:0 2px 6px rgba(43,39,33,.16);
+}
+.room-pill-btn.primary:hover{opacity:.92;transform:translateY(-1px)}
+.room-pill-btn.voice.active{
+  background:rgba(46,125,50,.12);border-color:rgba(46,125,50,.35);color:#1b5e20;
+}
+.room-pill-btn.sync.active{
+  background:rgba(154,106,62,.12);border-color:rgba(154,106,62,.35);color:var(--earth);
+}
+.room-pill-btn.leave{
+  padding:5px 9px;color:var(--ink-faint);border-color:transparent;font-size:11px;
+}
+.room-pill-btn.leave:hover{color:#b71c1c;background:rgba(183,28,28,.08)}
+.room-hint{font-size:12px;color:var(--ink-soft);font-style:italic}
+.room-badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink);padding:0 4px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#888;display:inline-block}
+.status-dot.waiting{background:#f59e0b;animation:pulseDot 1.8s infinite}
+.status-dot.connected{background:#10b981;box-shadow:0 0 6px rgba(16,185,129,.6)}
+@keyframes pulseDot{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.2)}}
+
+.audio-level-indicator{
+  width:8px;height:8px;border-radius:50%;background:#10b981;display:inline-block;
+  opacity:.3;transition:all .15s ease;
+}
+.audio-level-indicator.speaking{
+  opacity:1;box-shadow:0 0 10px #10b981;transform:scale(1.35);
+}
+
+.partner-turn-badge{
+  position:fixed;top:28px;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:rgba(43,39,33,.92);color:#faf7f0;padding:7px 18px;border-radius:999px;
+  font-family:var(--font);font-size:13px;letter-spacing:.02em;
+  box-shadow:0 6px 20px rgba(43,39,33,.25);backdrop-filter:blur(6px);
+  pointer-events:none;z-index:99;opacity:0;transition:all .35s cubic-bezier(.16,1,.3,1);
+}
+.partner-turn-badge.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.reading-toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(255,252,244,.95);border:1px solid var(--hairline);color:var(--ink);
+  padding:8px 20px;border-radius:999px;font-family:var(--font);font-size:13px;
+  box-shadow:0 8px 24px rgba(43,39,33,.14);backdrop-filter:blur(10px);
+  pointer-events:none;z-index:99;opacity:0;transition:all .35s cubic-bezier(.16,1,.3,1);
+}
+.reading-toast.visible{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ------------------------------------------------ Margin Notes Drawer */
+.notes-scrim{
+  position:fixed;inset:0;background:rgba(43,39,33,.3);backdrop-filter:blur(2px);
+  z-index:95;opacity:0;pointer-events:none;transition:opacity .28s ease;
+}
+.notes-scrim.open{opacity:1;pointer-events:auto}
+.notes-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(400px, 92vw);
+  background:#fcfaf5;border-left:1px solid var(--hairline);
+  box-shadow:-6px 0 28px rgba(43,39,33,.12);z-index:96;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .32s cubic-bezier(.16,1,.3,1);
+  font-family:var(--font);
+}
+.notes-drawer.open{transform:translateX(0)}
+.notes-header{
+  padding:20px 22px 16px;border-bottom:1px solid var(--hairline);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.notes-title{margin:0;font-family:var(--display);font-size:24px;font-weight:400;color:var(--ink)}
+.notes-sub{margin:4px 0 0;font-size:12.5px;color:var(--ink-soft);font-style:italic}
+.notes-close{
+  background:transparent;border:0;color:var(--ink-faint);font-size:18px;
+  cursor:pointer;padding:4px 8px;border-radius:4px;transition:color .2s;
+}
+.notes-close:hover{color:var(--ink)}
+.notes-list{
+  flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px;
+}
+.notes-empty{text-align:center;color:var(--ink-faint);margin:auto 0;padding:24px}
+.notes-empty p{margin:0 0 4px;font-size:14px}
+.notes-empty small{font-size:12px;font-style:italic}
+.note-item{
+  display:flex;flex-direction:column;gap:3px;padding:10px 14px;
+  background:rgba(255,255,255,.65);border:1px solid var(--hairline);
+  border-radius:8px;font-size:13.5px;line-height:1.45;color:var(--ink);
+}
+.note-item.you{background:rgba(244,238,226,.85);border-color:rgba(154,106,62,.25)}
+.note-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-faint);letter-spacing:.02em}
+.note-author{font-weight:600;color:var(--ink)}
+.note-page-tag{color:var(--earth);font-style:italic}
+.notes-quick-reactions{
+  display:flex;gap:6px;overflow-x:auto;padding:8px 18px;border-top:1px solid var(--hairline);
+  background:rgba(255,252,244,.5);scrollbar-width:none;
+}
+.notes-quick-reactions::-webkit-scrollbar{display:none}
+.reaction-chip{
+  flex:none;font-family:var(--font);font-size:11.5px;background:white;
+  border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;
+  cursor:pointer;color:var(--ink);transition:all .18s;
+}
+.reaction-chip:hover{background:var(--ink);color:white}
+.notes-form{
+  padding:14px 18px 20px;border-top:1px solid var(--hairline);
+  display:flex;gap:8px;background:#faf6ed;
+}
+.notes-form input{
+  flex:1;font-family:var(--font);font-size:13.5px;padding:8px 12px;
+  border:1px solid var(--hairline);border-radius:6px;background:white;color:var(--ink);
+}
+.notes-form input:focus{outline:none;border-color:var(--earth)}
+.notes-form button{
+  font-family:var(--font);font-size:13px;padding:8px 16px;
+  background:var(--ink);color:white;border:0;border-radius:6px;cursor:pointer;
+}
+.notes-form button:hover{opacity:.9}
+
+@media (max-width:640px){
+  .reading-room-bar{border-radius:16px;padding:8px 10px;gap:6px}
+  .room-pill-btn{font-size:11.5px;padding:4px 9px}
+  .room-hint{display:none}
+}
 </style>
 </head>
 <body>
@@ -474,6 +615,49 @@ button{font:inherit}
     <div class="book-switcher" role="tablist" aria-label="select book to read">
       <button class="book-tab active" id="tabMorisaki" role="tab" aria-selected="true">📖 Days at the Morisaki Bookshop</button>
       <button class="book-tab" id="tabSketchbook" role="tab" aria-selected="false">🎨 Singapore Sketchbook</button>
+    </div>
+
+    <!-- 2-Person Shared Reading Room Bar -->
+    <div class="reading-room-wrapper" id="roomWrapper">
+      <div class="reading-room-bar idle" id="roomBarIdle">
+        <button class="room-pill-btn primary" id="btnCreateRoom" aria-label="Create private reading room">
+          <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 16v-1a4.002 4.002 0 00-3-3.874A6.004 6.004 0 0117 16h-1zM4 16v-1c0-.98.355-1.879.944-2.58A6.002 6.002 0 003 16h1z"/></svg>
+          <span>👥 Read Together (Private 2-Person Session)</span>
+        </button>
+        <span class="room-hint">Live synced page turns, voice & margin notes</span>
+      </div>
+
+      <div class="reading-room-bar active" id="roomBarActive" style="display:none;">
+        <div class="room-badge" id="roomStatusBadge">
+          <span class="status-dot waiting" id="statusDot"></span>
+          <span class="room-status-text" id="roomStatusText">Room: <strong id="roomCodeDisplay"></strong> · Waiting for partner</span>
+        </div>
+
+        <div class="room-actions">
+          <button class="room-pill-btn" id="btnCopyInvite" title="Copy private invite link">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M4 13V5a2 2 0 012-2h8"/></svg>
+            <span id="copyInviteText">Copy Invite</span>
+          </button>
+
+          <button class="room-pill-btn voice" id="btnVoiceToggle" title="Toggle live voice chat">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 2a3 3 0 00-3 3v5a3 3 0 006 0V5a3 3 0 00-3-3z"/><path d="M16 9v1a6 6 0 01-12 0V9M10 16v3M7 19h6"/></svg>
+            <span id="voiceStatusText">Voice: Off</span>
+            <span class="audio-level-indicator" id="audioLevelDot" style="display:none;"></span>
+          </button>
+
+          <button class="room-pill-btn sync active" id="btnSyncToggle" title="Toggle page synchronization">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span id="syncStatusText">Sync: ON</span>
+          </button>
+
+          <button class="room-pill-btn notes" id="btnNotesToggle" title="Open margin notes">
+            <svg viewBox="0 0 20 20" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 10c0 3.866-3.582 7-8 7a8.84 8.84 0 01-2.923-.49L3 17l1.09-2.726C3.418 13.11 3 11.616 3 10c0-3.866 3.582-7 8-7s8 3.134 8 7z"/></svg>
+            <span>Notes (<span id="notesCount">0</span>)</span>
+          </button>
+
+          <button class="room-pill-btn leave" id="btnLeaveRoom" title="Leave reading room">✕ Leave</button>
+        </div>
+      </div>
     </div>
 
     <div class="sb-wrap" id="sbWrap">
@@ -548,7 +732,47 @@ button{font:inherit}
   </section>
 
   <div class="rule short" aria-hidden="true"></div>
-  <p class="foot" id="contact">SHARED READING · STORIES · CONNECTION · <a href="#contact" class="bio-link">SAY HELLO</a></p>
+  <!-- Floating Partner Turn Toast -->
+  <div class="partner-turn-badge" id="partnerTurnBadge" aria-live="polite">
+    <span id="partnerTurnText">📖 Partner turned to Page 1</span>
+  </div>
+
+  <!-- General Reading / Session Toast -->
+  <div class="reading-toast" id="readingToast" aria-live="polite"></div>
+
+  <!-- Margin Notes Drawer & Scrim -->
+  <div class="notes-scrim" id="notesScrim"></div>
+  <aside class="notes-drawer" id="notesDrawer" aria-label="Margin Notes & Whispers">
+    <div class="notes-header">
+      <div class="notes-title-group">
+        <h3 class="notes-title">Margin Notes</h3>
+        <p class="notes-sub">Quiet whispers & thoughts shared between you</p>
+      </div>
+      <button class="notes-close" id="notesCloseBtn" aria-label="Close notes">✕</button>
+    </div>
+
+    <div class="notes-list" id="notesList">
+      <div class="notes-empty" id="notesEmpty">
+        <p>No notes scribbled yet.</p>
+        <small>Write a warm thought on this page for your partner.</small>
+      </div>
+    </div>
+
+    <div class="notes-quick-reactions">
+      <button type="button" class="reaction-chip" data-react="🔖 Bookmarked this page">🔖 Bookmark</button>
+      <button type="button" class="reaction-chip" data-react="✨ Such a beautiful passage">✨ Beautiful</button>
+      <button type="button" class="reaction-chip" data-react="☕ Pausing for a cup of tea">☕ Tea break</button>
+      <button type="button" class="reaction-chip" data-react="📖 Ready for next chapter">📖 Next</button>
+    </div>
+
+    <form class="notes-form" id="notesForm">
+      <input type="text" id="notesInput" placeholder="Write a margin note on this page..." autocomplete="off" maxlength="240" />
+      <button type="submit" id="notesSubmitBtn">Send</button>
+    </form>
+  </aside>
+
+  <!-- P2P Voice Audio Element -->
+  <audio id="remoteVoiceAudio" autoplay playsinline></audio>
 </main>
 
 <script>
@@ -1037,6 +1261,7 @@ function paint(){
     im.draggable=false;
     f.appendChild(im);book.appendChild(f);
     sb3d.style.setProperty('--shade','0');
+    if(typeof onPageTurnSettled === 'function') onPageTurnSettled(idx);
   }else{
     const next=turn.dir==='next';
     book.appendChild(halfEl('left', next?turn.from:turn.to));
@@ -1472,11 +1697,44 @@ function marks(){
   plateList.querySelectorAll('.plate').forEach((b,i)=>b.setAttribute('aria-current',i===cur?'true':'false'));
 }
 
-/* ---------------------------------------------------------- the riffle */
+/* ---------------------------------------------------------- the riffle (7 preview pages) */
+const PREVIEW_LIMIT = 7;
 let riffle=null,riffleAt=0,introOn=false;
-function endIntro(){
-  introOn=false;wrap.classList.remove('intro','b2');
+
+let toastTimeout = null;
+function showToast(msg, duration = 3800){
+  const toast = document.getElementById('readingToast');
+  if(!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('visible');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('visible');
+  }, duration);
 }
+
+let partnerBadgeTimeout = null;
+function showPartnerBadge(msg, duration = 3400){
+  const badge = document.getElementById('partnerTurnBadge');
+  const text = document.getElementById('partnerTurnText');
+  if(!badge || !text) return;
+  text.textContent = msg;
+  badge.classList.add('visible');
+  clearTimeout(partnerBadgeTimeout);
+  partnerBadgeTimeout = setTimeout(() => {
+    badge.classList.remove('visible');
+  }, duration);
+}
+
+function endIntro(){
+  if(!introOn) return;
+  introOn=false;
+  wrap.classList.remove('intro','b2');
+  idx = 1; /* Land comfortably on Chapter 1 */
+  paint();
+  showToast('📖 7-Page preview complete · Ready to read Days at the Morisaki Bookshop (Pages 1–147)');
+}
+
 function riffleStep(){
   const s=riffle[riffleAt];
   wrap.classList.toggle('b2',s.bell>0.55);
@@ -1488,24 +1746,543 @@ function riffleStep(){
     else{endIntro();paint();}
   });
 }
+
 function startIntro(){
   const coarse=matchMedia('(max-width: 640px), (pointer: coarse)').matches;
-  if(coarse||REDUCED||Q.has('nointro')){idx=LAND;paint();return;}
-  const steps=M+LAND;
+  if(coarse||REDUCED||Q.has('nointro')){idx=1;paint();return;}
+  const steps = Math.min(PREVIEW_LIMIT, PAGES.length);
   riffle=[];
   for(let r=0;r<steps;r++){
     const bell=Math.sin(Math.PI*(r/(steps-1)));
-    riffle.push({bell:bell,dur:0.26-0.19*bell});
+    riffle.push({bell:bell,dur:0.28-0.16*bell});
   }
   riffleAt=0;introOn=true;wrap.classList.add('intro');
   riffleStep();
 }
 
+function lazyLoadRemainingPages(){
+  let nextIdx = PREVIEW_LIMIT;
+  function loadNextBatch(){
+    if(nextIdx >= PAGES.length) return;
+    const end = Math.min(nextIdx + 4, PAGES.length);
+    for(let i = nextIdx; i < end; i++){
+      const im = new Image();
+      im.src = PAGES[i].url;
+    }
+    nextIdx = end;
+    if('requestIdleCallback' in window){
+      requestIdleCallback(loadNextBatch, { timeout: 1500 });
+    } else {
+      setTimeout(loadNextBatch, 400);
+    }
+  }
+  setTimeout(loadNextBatch, 1500);
+}
+
+/* ------------------------------------------------ 2-Person Shared Room & Voice */
+let peer = null;
+let activeConn = null;
+let currentCall = null;
+let localStream = null;
+let isAudioActive = false;
+let isAudioMuted = false;
+let syncEnabled = true;
+let isReceivingSync = false;
+let currentRoomId = null;
+let isHost = false;
+let partnerPeerId = null;
+let unreadNotes = 0;
+
+const roomBarIdle = document.getElementById('roomBarIdle');
+const roomBarActive = document.getElementById('roomBarActive');
+const btnCreateRoom = document.getElementById('btnCreateRoom');
+const btnCopyInvite = document.getElementById('btnCopyInvite');
+const copyInviteText = document.getElementById('copyInviteText');
+const btnVoiceToggle = document.getElementById('btnVoiceToggle');
+const voiceStatusText = document.getElementById('voiceStatusText');
+const audioLevelDot = document.getElementById('audioLevelDot');
+const btnSyncToggle = document.getElementById('btnSyncToggle');
+const syncStatusText = document.getElementById('syncStatusText');
+const btnNotesToggle = document.getElementById('btnNotesToggle');
+const notesCount = document.getElementById('notesCount');
+const btnLeaveRoom = document.getElementById('btnLeaveRoom');
+const roomCodeDisplay = document.getElementById('roomCodeDisplay');
+const statusDot = document.getElementById('statusDot');
+const roomStatusText = document.getElementById('roomStatusText');
+const remoteVoiceAudio = document.getElementById('remoteVoiceAudio');
+
+const notesDrawer = document.getElementById('notesDrawer');
+const notesScrim = document.getElementById('notesScrim');
+const notesCloseBtn = document.getElementById('notesCloseBtn');
+const notesForm = document.getElementById('notesForm');
+const notesInput = document.getElementById('notesInput');
+const notesList = document.getElementById('notesList');
+const notesEmpty = document.getElementById('notesEmpty');
+
+function getRoomQuery(){
+  let r = Q.get('room');
+  if(!r){
+    try {
+      if(window.parent && window.parent.location && window.parent.location.search){
+        const pQ = new URLSearchParams(window.parent.location.search);
+        r = pQ.get('room');
+      }
+    } catch(e){}
+  }
+  return r;
+}
+
+function updateUrlRoom(roomId){
+  const newParam = roomId ? `?room=${roomId}` : window.location.pathname;
+  try {
+    window.history.replaceState({}, '', newParam);
+  } catch(e){}
+  try {
+    if(window.parent && window.parent.history){
+      window.parent.history.replaceState({}, '', newParam);
+    }
+  } catch(e){}
+}
+
+function getInviteUrl(roomId){
+  let origin = window.location.origin;
+  let path = window.location.pathname;
+  try {
+    if(window.parent && window.parent.location && window.parent.location.origin){
+      origin = window.parent.location.origin;
+      path = window.parent.location.pathname;
+    }
+  } catch(e){}
+  return `${origin}${path}?room=${roomId}`;
+}
+
+function initReadingRoom(){
+  const urlRoom = getRoomQuery();
+  if(urlRoom){
+    joinRoomAsGuest(urlRoom);
+  }
+}
+
+if(btnCreateRoom){
+  btnCreateRoom.onclick = () => {
+    const newRoomId = 'room-' + Math.random().toString(36).substring(2, 8);
+    createRoomAsHost(newRoomId);
+  };
+}
+
+function createRoomAsHost(roomId){
+  currentRoomId = roomId;
+  isHost = true;
+  updateUrlRoom(roomId);
+
+  if(roomBarIdle) roomBarIdle.style.display = 'none';
+  if(roomBarActive) roomBarActive.style.display = 'inline-flex';
+  if(roomCodeDisplay) roomCodeDisplay.textContent = roomId;
+  if(statusDot) statusDot.className = 'status-dot waiting';
+  if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · Waiting for partner (1/2)`;
+
+  const hostPeerId = `ourpages_room_${roomId}_host`;
+  partnerPeerId = `ourpages_room_${roomId}_guest`;
+
+  if(peer) peer.destroy();
+
+  try {
+    peer = new Peer(hostPeerId, {
+      debug: 1,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' }
+        ]
+      }
+    });
+  } catch(err){
+    console.error('Peer init error', err);
+    showToast('Could not initialize network for reading room.');
+    return;
+  }
+
+  peer.on('open', () => {
+    showToast('✨ Private room created! Share invite link with your partner.');
+  });
+
+  peer.on('connection', conn => {
+    if(activeConn && activeConn.open){
+      conn.on('open', () => {
+        conn.send({ type: 'ROOM_FULL', message: 'This room is private and already full (2/2 readers).' });
+        setTimeout(() => conn.close(), 500);
+      });
+      return;
+    }
+    setupDataConnection(conn);
+  });
+
+  peer.on('call', handleIncomingCall);
+
+  peer.on('error', err => {
+    console.warn('Peer error', err);
+    if(err.type === 'unavailable-id'){
+      showToast('Room code conflict, retrying with new code...');
+      createRoomAsHost('room-' + Math.random().toString(36).substring(2, 8));
+    }
+  });
+}
+
+function joinRoomAsGuest(roomId){
+  currentRoomId = roomId;
+  isHost = false;
+  updateUrlRoom(roomId);
+
+  if(roomBarIdle) roomBarIdle.style.display = 'none';
+  if(roomBarActive) roomBarActive.style.display = 'inline-flex';
+  if(roomCodeDisplay) roomCodeDisplay.textContent = roomId;
+  if(statusDot) statusDot.className = 'status-dot waiting';
+  if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · Connecting to host...`;
+
+  const guestPeerId = `ourpages_room_${roomId}_guest_${Math.random().toString(36).substring(2, 6)}`;
+  partnerPeerId = `ourpages_room_${roomId}_host`;
+
+  if(peer) peer.destroy();
+
+  try {
+    peer = new Peer(guestPeerId, {
+      debug: 1,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' }
+        ]
+      }
+    });
+  } catch(err){
+    console.error('Peer init error', err);
+    showToast('Could not initialize network.');
+    return;
+  }
+
+  peer.on('open', () => {
+    const conn = peer.connect(partnerPeerId, { reliable: true });
+    setupDataConnection(conn);
+  });
+
+  peer.on('call', handleIncomingCall);
+
+  peer.on('error', err => {
+    console.warn('Guest peer error', err);
+    if(err.type === 'peer-unavailable'){
+      if(roomStatusText) roomStatusText.innerHTML = `Host offline for <strong>${roomId}</strong>`;
+      showToast('Host is not currently in this room.');
+    }
+  });
+}
+
+function setupDataConnection(conn){
+  activeConn = conn;
+
+  conn.on('open', () => {
+    if(statusDot) statusDot.className = 'status-dot connected';
+    if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${currentRoomId}</strong> · Reading Together (2/2)`;
+    showToast('👥 Partner connected! You are now reading together in sync.');
+
+    if(isHost){
+      conn.send({
+        type: 'SYNC_STATE',
+        spreadIdx: idx,
+        book: PAGES === MORISAKI_PAGES ? 'morisaki' : 'sketchbook',
+        title: PAGES[idx] ? PAGES[idx].title : ''
+      });
+    }
+  });
+
+  conn.on('data', data => {
+    if(!data) return;
+    if(data.type === 'ROOM_FULL'){
+      showToast('⚠️ ' + data.message, 5000);
+      leaveReadingRoom();
+      return;
+    }
+    if(data.type === 'SYNC_STATE' || data.type === 'PAGE_TURN'){
+      if(data.book && ((data.book === 'morisaki' && PAGES !== MORISAKI_PAGES) || (data.book === 'sketchbook' && PAGES !== SKETCHBOOK_PAGES))){
+        selectCollection(data.book);
+      }
+      if(syncEnabled && typeof data.spreadIdx === 'number'){
+        isReceivingSync = true;
+        goTo(data.spreadIdx);
+        isReceivingSync = false;
+        showPartnerBadge('📖 Partner turned to ' + (data.title || ('Page ' + (data.spreadIdx * 2))));
+      }
+    }
+    if(data.type === 'NOTE'){
+      addNoteToUI('Partner', data.text, data.pageTitle, data.timestamp);
+      if(!notesDrawer.classList.contains('open')){
+        unreadNotes++;
+        if(notesCount) notesCount.textContent = unreadNotes;
+        showToast(`💬 Partner: "${data.text.slice(0, 45)}${data.text.length > 45 ? '…' : ''}"`);
+      }
+    }
+  });
+
+  conn.on('close', () => {
+    if(statusDot) statusDot.className = 'status-dot waiting';
+    if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${currentRoomId}</strong> · Partner disconnected`;
+    showToast('Partner left the reading session.');
+    activeConn = null;
+  });
+
+  conn.on('error', err => {
+    console.warn('Conn error', err);
+  });
+}
+
+function onPageTurnSettled(settledIdx){
+  if(introOn || isReceivingSync) return;
+  if(activeConn && activeConn.open && syncEnabled){
+    activeConn.send({
+      type: 'PAGE_TURN',
+      spreadIdx: settledIdx,
+      book: PAGES === MORISAKI_PAGES ? 'morisaki' : 'sketchbook',
+      title: PAGES[settledIdx] ? PAGES[settledIdx].title : ('Page ' + (settledIdx * 2))
+    });
+  }
+}
+
+/* ------------------------------------------------ Copy Invite Link */
+if(btnCopyInvite){
+  btnCopyInvite.onclick = async () => {
+    if(!currentRoomId) return;
+    const url = getInviteUrl(currentRoomId);
+    try {
+      await navigator.clipboard.writeText(url);
+      copyInviteText.textContent = 'Copied!';
+      showToast('📋 Private invite link copied to clipboard!');
+      setTimeout(() => { if(copyInviteText) copyInviteText.textContent = 'Copy Invite'; }, 2200);
+    } catch(e){
+      prompt('Copy this private invite link for your partner:', url);
+    }
+  };
+}
+
+/* ------------------------------------------------ Sync Toggle */
+if(btnSyncToggle){
+  btnSyncToggle.onclick = () => {
+    syncEnabled = !syncEnabled;
+    btnSyncToggle.classList.toggle('active', syncEnabled);
+    syncStatusText.textContent = syncEnabled ? 'Sync: ON' : 'Sync: OFF';
+    showToast(syncEnabled ? '🔄 Page synchronization enabled' : '⏸️ Page synchronization paused (solo reading)');
+  };
+}
+
+/* ------------------------------------------------ Voice Call (Free WebRTC P2P) */
+async function startVoiceCall(){
+  try {
+    if(!localStream){
+      localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setupAudioVisualizer(localStream);
+    }
+    isAudioActive = true;
+    isAudioMuted = false;
+    btnVoiceToggle.classList.add('active');
+    voiceStatusText.textContent = 'Voice: Live';
+    if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
+
+    const targetPeer = isHost ? partnerPeerId : `ourpages_room_${currentRoomId}_host`;
+    if(peer && targetPeer){
+      currentCall = peer.call(targetPeer, localStream);
+      currentCall.on('stream', remoteStream => {
+        if(remoteVoiceAudio){
+          remoteVoiceAudio.srcObject = remoteStream;
+          remoteVoiceAudio.play().catch(()=>{});
+        }
+      });
+    }
+    showToast('🎙️ Live voice active. Talk freely with your partner!');
+  } catch(err){
+    console.warn('Microphone error', err);
+    showToast('Microphone access needed for voice. Margin notes are still available!');
+  }
+}
+
+function handleIncomingCall(call){
+  currentCall = call;
+  if(localStream){
+    call.answer(localStream);
+    setupCallStream(call);
+  } else {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      localStream = stream;
+      setupAudioVisualizer(stream);
+      isAudioActive = true;
+      isAudioMuted = false;
+      btnVoiceToggle.classList.add('active');
+      voiceStatusText.textContent = 'Voice: Live';
+      if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
+      call.answer(stream);
+      setupCallStream(call);
+    }).catch(() => {
+      call.answer();
+      setupCallStream(call);
+    });
+  }
+}
+
+function setupCallStream(call){
+  call.on('stream', remoteStream => {
+    if(remoteVoiceAudio){
+      remoteVoiceAudio.srcObject = remoteStream;
+      remoteVoiceAudio.play().catch(()=>{});
+    }
+  });
+}
+
+function toggleVoice(){
+  if(!isAudioActive){
+    startVoiceCall();
+  } else {
+    isAudioMuted = !isAudioMuted;
+    if(localStream){
+      localStream.getAudioTracks().forEach(t => t.enabled = !isAudioMuted);
+    }
+    if(isAudioMuted){
+      btnVoiceToggle.classList.remove('active');
+      voiceStatusText.textContent = 'Muted';
+      if(audioLevelDot) audioLevelDot.classList.remove('speaking');
+      showToast('🎙️ Microphone muted');
+    } else {
+      btnVoiceToggle.classList.add('active');
+      voiceStatusText.textContent = 'Voice: Live';
+      showToast('🎙️ Microphone unmuted');
+    }
+  }
+}
+
+if(btnVoiceToggle) btnVoiceToggle.onclick = toggleVoice;
+
+let audioCtx = null, analyser = null, animFrame = null;
+function setupAudioVisualizer(stream){
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContext) return;
+    audioCtx = new AudioContext();
+    const src = audioCtx.createMediaStreamSource(stream);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 128;
+    src.connect(analyser);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    function check(){
+      if(!analyser) return;
+      analyser.getByteFrequencyData(data);
+      let sum = 0;
+      for(let i = 0; i < data.length; i++) sum += data[i];
+      const avg = sum / data.length;
+      if(audioLevelDot){
+        if(!isAudioMuted && avg > 16){
+          audioLevelDot.classList.add('speaking');
+        } else {
+          audioLevelDot.classList.remove('speaking');
+        }
+      }
+      animFrame = requestAnimationFrame(check);
+    }
+    check();
+  } catch(e){}
+}
+
+/* ------------------------------------------------ Margin Notes Drawer */
+function toggleNotesDrawer(open){
+  const shouldOpen = (open !== undefined) ? open : !notesDrawer.classList.contains('open');
+  notesDrawer.classList.toggle('open', shouldOpen);
+  notesScrim.classList.toggle('open', shouldOpen);
+  if(shouldOpen){
+    unreadNotes = 0;
+    if(notesCount) notesCount.textContent = '0';
+    if(notesInput) setTimeout(() => notesInput.focus(), 250);
+  }
+}
+
+if(btnNotesToggle) btnNotesToggle.onclick = () => toggleNotesDrawer(true);
+if(notesCloseBtn) notesCloseBtn.onclick = () => toggleNotesDrawer(false);
+if(notesScrim) notesScrim.onclick = () => toggleNotesDrawer(false);
+
+function addNoteToUI(sender, text, pageTitle, timestamp){
+  if(notesEmpty) notesEmpty.style.display = 'none';
+  const item = document.createElement('div');
+  item.className = 'note-item' + (sender === 'You' ? ' you' : '');
+  const timeStr = new Date(timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  item.innerHTML = `
+    <div class="note-meta">
+      <span class="note-author">${sender}</span>
+      <span class="note-page-tag">${pageTitle || ''} · ${timeStr}</span>
+    </div>
+    <div class="note-body">${escapeHtml(text)}</div>
+  `;
+  notesList.appendChild(item);
+  notesList.scrollTop = notesList.scrollHeight;
+}
+
+function escapeHtml(str){
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function sendNote(text){
+  if(!text || !text.trim()) return;
+  const currentTitle = (PAGES[idx] ? PAGES[idx].title : 'Page');
+  addNoteToUI('You', text, currentTitle, Date.now());
+  if(activeConn && activeConn.open){
+    activeConn.send({
+      type: 'NOTE',
+      text: text,
+      pageTitle: currentTitle,
+      timestamp: Date.now()
+    });
+  }
+  if(notesInput) notesInput.value = '';
+}
+
+if(notesForm){
+  notesForm.onsubmit = (e) => {
+    e.preventDefault();
+    if(notesInput) sendNote(notesInput.value);
+  };
+}
+
+document.querySelectorAll('.reaction-chip').forEach(btn => {
+  btn.onclick = () => {
+    const text = btn.getAttribute('data-react');
+    if(text) sendNote(text);
+  };
+});
+
+/* ------------------------------------------------ Leave Room */
+function leaveReadingRoom(){
+  if(activeConn) { try { activeConn.close(); } catch(e){} }
+  if(currentCall) { try { currentCall.close(); } catch(e){} }
+  if(localStream) { try { localStream.getTracks().forEach(t => t.stop()); } catch(e){} }
+  if(peer) { try { peer.destroy(); } catch(e){} }
+  activeConn = null;
+  currentCall = null;
+  localStream = null;
+  isAudioActive = false;
+  isAudioMuted = false;
+  currentRoomId = null;
+  updateUrlRoom('');
+
+  if(roomBarActive) roomBarActive.style.display = 'none';
+  if(roomBarIdle) roomBarIdle.style.display = 'inline-flex';
+  if(voiceStatusText) voiceStatusText.textContent = 'Voice: Off';
+  if(btnVoiceToggle) btnVoiceToggle.classList.remove('active');
+  if(audioLevelDot) audioLevelDot.style.display = 'none';
+  showToast('You left the reading session.');
+}
+
+if(btnLeaveRoom) btnLeaveRoom.onclick = leaveReadingRoom;
+
 /* ------------------------------------------------------------- boot */
 (async function boot(){
   idx=Q.has('shot')?(parseInt(Q.get('shot'),10)||0)%M:0;
   paint();applyView();
-  await Promise.all(PAGES.map(p=>{
+  // Only pre-decode the first 7 preview pages on initial load
+  const initialBatch = PAGES.slice(0, PREVIEW_LIMIT);
+  await Promise.all(initialBatch.map(p=>{
     const im=new Image();im.src=p.url;
     return im.decode?im.decode().catch(()=>{}):new Promise(r=>{im.onload=im.onerror=r});
   }));
@@ -1517,6 +2294,10 @@ function startIntro(){
     return;
   }
   setTimeout(startIntro,220);
+  // Lazily load remaining pages in background
+  lazyLoadRemainingPages();
+  // Initialize Shared Reading Room
+  initReadingRoom();
 })();
 </script>
 </body>

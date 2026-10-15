@@ -620,7 +620,8 @@ export function MeridianPage(props: Omit<MeridianLandingPageProps, "presentation
 export function MengToSketchbookLandingPage(props: LandingPageProps & PageTypographyProps) {
   const [type, frame] = splitTypographyProps(props);
   const customization = usePageTypography(MENG_TO_SKETCHBOOK_TYPOGRAPHY, type);
-  return <LandingPageFrame {...frame} customization={customization} title="OurPages — Bhopal" sourceUrl="/landing-pages/meng-to-sketchbook.html" />;
+  const search = typeof window !== "undefined" ? window.location.search : "";
+  return <LandingPageFrame {...frame} customization={customization} title="OurPages — Bhopal" sourceUrl={`/landing-pages/meng-to-sketchbook.html${search}`} />;
 }
 
 export function SekiteiLandingPage(props: LandingPageProps) {
