@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper: Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: Check if user is one of the 2 private room members
+    function isRoomMember(roomId) {
+      let room = get(/databases/$(database)/documents/rooms/$(roomId)).data;
+      return isAuthenticated() && (room.hostUid == request.auth.uid || room.guestUid == request.auth.uid);
+    }
+
+    // 1. User Profiles Collection
+    match /users/{userId} {
+      // User can only read and update their own profile document
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // 2. Private Reading Rooms Collection
+    match /rooms/{roomId} {
+      // READ: Only the Host, the Guest, or a new user joining an open room (where guestUid is null)
+      allow read: if isAuthenticated() && (
+        resource.data.hostUid == request.auth.uid ||
+        resource.data.guestUid == request.auth.uid ||
+        resource.data.guestUid == null
+      );
+
+      // CREATE: Host creating a new room
+      allow create: if isAuthenticated() &&
+        request.resource.data.hostUid == request.auth.uid &&
+        (!('guestUid' in request.resource.data) || request.resource.data.guestUid == null) &&
+        request.resource.data.bookId is string;
+
+      // UPDATE: Only current host or guest, or a guest joining an empty slot
+      allow update: if isAuthenticated() && (
+        // Case A: A guest is joining the room (strictly filling the 2nd slot)
+        (resource.data.guestUid == null &&
+         request.resource.data.guestUid == request.auth.uid &&
+         request.resource.data.hostUid == resource.data.hostUid) ||
+        // Case B: Host or Guest syncing page turns, presence, or audio
+        ((resource.data.hostUid == request.auth.uid || resource.data.guestUid == request.auth.uid) &&
+         request.resource.data.hostUid == resource.data.hostUid &&
+         request.resource.data.guestUid == resource.data.guestUid)
+      );
+
+      // DELETE: Only the Host can close/delete the room
+      allow delete: if isAuthenticated() && resource.data.hostUid == request.auth.uid;
+
+      // 3. Margin Notes & Whispers Subcollection
+      match /notes/{noteId} {
+        allow read: if isRoomMember(roomId);
+        // Only author can create a note; max 400 chars (prevents spam/DoS)
+        allow create: if isRoomMember(roomId) &&
+          request.resource.data.authorId == request.auth.uid &&
+          request.resource.data.text is string &&
+          request.resource.data.text.size() > 0 &&
+          request.resource.data.text.size() <= 400;
+        // Notes are immutable (nobody can edit or tamper with notes)
+        allow update, delete: if false;
+      }
+
+      // 4. Silk Ribbon Bookmarks Subcollection
+      match /bookmarks/{bookmarkId} {
+        allow read: if isRoomMember(roomId);
+        allow create, update: if isRoomMember(roomId) &&
+          request.resource.data.pageNumber is int &&
+          request.resource.data.pageNumber >= 1;
+        allow delete: if isRoomMember(roomId);
+      }
+    }
+  }
+}

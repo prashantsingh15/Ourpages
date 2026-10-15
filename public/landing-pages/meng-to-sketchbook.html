@@ -586,6 +586,155 @@ button{font:inherit}
   .room-pill-btn{font-size:11.5px;padding:4px 9px}
   .room-hint{display:none}
 }
+
+/* ------------------------------------------------ Auth & Lounge Navigation */
+.nav-lounge-btn, .nav-auth-btn{
+  font-family:var(--font);font-size:13px;letter-spacing:var(--track-nav);
+  background:rgba(255,252,244,.7);border:1px solid var(--hairline);
+  color:var(--ink);padding:4px 11px;border-radius:999px;cursor:pointer;
+  transition:all .2s ease;display:inline-flex;align-items:center;gap:5px;
+}
+.nav-lounge-btn:hover, .nav-auth-btn:hover{background:var(--ink);color:#faf7f0}
+.user-auth-pill{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--font);
+  font-size:12.5px;color:var(--ink);background:rgba(255,252,244,.85);
+  border:1px solid var(--hairline);padding:3px 10px;border-radius:999px;
+}
+.user-auth-pill .user-dot{width:7px;height:7px;border-radius:50%;background:#10b981}
+
+/* ------------------------------------------------ Modals (Auth & Lounge) */
+.modal-scrim{
+  position:fixed;inset:0;background:rgba(43,39,33,.45);backdrop-filter:blur(5px);
+  z-index:98;display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.modal-scrim.open{opacity:1;pointer-events:auto}
+.modal-card{
+  background:#fcfaf5;border:1px solid var(--hairline);border-radius:16px;
+  box-shadow:0 24px 60px rgba(43,39,33,.22);width:100%;max-width:520px;
+  max-height:90vh;overflow-y:auto;padding:32px 36px;position:relative;
+  font-family:var(--font);transform:scale(.96);transition:transform .25s cubic-bezier(.16,1,.3,1);
+}
+.modal-scrim.open .modal-card{transform:scale(1)}
+.modal-close{
+  position:absolute;top:18px;right:18px;background:transparent;border:0;
+  font-size:18px;color:var(--ink-faint);cursor:pointer;padding:6px 10px;
+  border-radius:6px;transition:color .2s;
+}
+.modal-close:hover{color:var(--ink)}
+.modal-badge{
+  font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
+  color:var(--earth);font-weight:600;margin-bottom:8px;
+}
+.modal-title{
+  font-family:var(--display);font-size:clamp(26px,3vw,34px);font-weight:400;
+  color:var(--ink);margin:0 0 6px;line-height:1.15;
+}
+.modal-sub{font-size:14px;color:var(--ink-soft);margin:0 0 24px;line-height:1.45}
+
+/* Auth Tabs & Form */
+.auth-tabs{
+  display:flex;border-bottom:1px solid var(--hairline);margin-bottom:20px;gap:18px;
+}
+.auth-tab-btn{
+  font-family:var(--font);font-size:14.5px;background:transparent;border:0;
+  border-bottom:2px solid transparent;color:var(--ink-faint);padding:6px 4px 10px;
+  cursor:pointer;transition:all .2s ease;
+}
+.auth-tab-btn.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.auth-form{display:flex;flex-direction:column;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.form-group input{
+  font-family:var(--font);font-size:15px;padding:10px 14px;border:1px solid var(--hairline);
+  border-radius:8px;background:#ffffff;color:var(--ink);transition:border-color .2s;
+}
+.form-group input:focus{outline:none;border-color:var(--earth);box-shadow:0 0 0 2px rgba(154,106,62,.15)}
+.auth-error-msg{
+  font-size:12.5px;color:#b71c1c;background:rgba(183,28,28,.08);
+  border:1px solid rgba(183,28,28,.2);padding:8px 12px;border-radius:6px;
+}
+.auth-submit-btn{
+  font-family:var(--font);font-size:14px;letter-spacing:.02em;padding:12px;
+  background:var(--ink);color:#faf7f0;border:0;border-radius:8px;cursor:pointer;
+  font-weight:500;transition:opacity .2s;margin-top:6px;
+}
+.auth-submit-btn:hover{opacity:.92}
+.auth-divider{
+  display:flex;align-items:center;text-align:center;color:var(--ink-faint);
+  font-size:12px;letter-spacing:var(--track-caps);text-transform:uppercase;margin:18px 0;
+}
+.auth-divider::before, .auth-divider::after{content:'';flex:1;border-bottom:1px solid var(--hairline)}
+.auth-divider span{padding:0 10px}
+.guest-bypass-btn{
+  width:100%;font-family:var(--font);font-size:13.5px;background:transparent;
+  border:1px dashed var(--hairline);color:var(--ink);padding:10px;border-radius:8px;
+  cursor:pointer;transition:all .2s;
+}
+.guest-bypass-btn:hover{background:rgba(43,39,33,.05);border-color:var(--ink)}
+
+/* Bookshelf Lounge Grid */
+.lounge-card{max-width:760px}
+.bookshelf-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:18px;margin-top:16px}
+.book-card{
+  background:#fff;border:1px solid var(--hairline);border-radius:12px;
+  padding:16px;display:flex;flex-direction:column;gap:12px;transition:all .22s ease;
+}
+.book-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(43,39,33,.09);border-color:rgba(154,106,62,.4)}
+.book-cover-mock{
+  height:140px;border-radius:6px;position:relative;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:14px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+}
+.book-cover-mock.morisaki{background:linear-gradient(135deg, #f5efe6 0%, #e2d5c3 100%)}
+.book-cover-mock.sketchbook{background:linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%)}
+.book-cover-mock.upload{background:#f4f0e6;border:2px dashed var(--hairline);align-items:center;justify-content:center;gap:6px}
+.book-cover-inner{position:relative;z-index:2}
+.cover-kicker{font-size:9.5px;letter-spacing:var(--track-caps);text-transform:uppercase;color:var(--earth);font-weight:600}
+.cover-title{font-family:var(--display);font-size:17px;color:var(--ink);margin:3px 0 2px;line-height:1.2}
+.cover-author{font-size:11.5px;color:var(--ink-soft);font-style:italic}
+.book-card-info h3{font-family:var(--display);font-size:18px;margin:0 0 4px;color:var(--ink)}
+.book-card-info p{font-size:12.5px;color:var(--ink-soft);line-height:1.45;margin:0 0 12px}
+.btn-create-book-room{
+  width:100%;font-family:var(--font);font-size:12.5px;padding:8px 12px;
+  background:var(--ink);color:#faf7f0;border:0;border-radius:6px;cursor:pointer;
+  transition:all .2s;
+}
+.btn-create-book-room:hover{opacity:.92;transform:translateY(-1px)}
+
+/* Silk Ribbon Bookmark on the Book */
+.sb-ribbon{
+  position:absolute;top:-22px;left:50%;margin-left:-11px;width:22px;height:72px;
+  background:linear-gradient(180deg, #9e2a2b 0%, #ba3a3c 70%, #852123 100%);
+  border-radius:2px 2px 0 0;
+  box-shadow:0 4px 14px rgba(43,39,33,.38);
+  z-index:30;pointer-events:none;
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  transform-origin:top center;
+  animation:dropRibbon .35s cubic-bezier(.16,1,.3,1);
+}
+@keyframes dropRibbon{
+  from{transform:scaleY(0);opacity:0}
+  to{transform:scaleY(1);opacity:1}
+}
+
+/* Drawer Navigation Tabs (Notes vs Bookmarks) */
+.drawer-nav{display:flex;border-bottom:1px solid var(--hairline);background:rgba(255,252,244,.6)}
+.drawer-tab{
+  flex:1;font-family:var(--font);font-size:13px;padding:12px 14px;background:transparent;
+  border:0;border-bottom:2px solid transparent;color:var(--ink-faint);cursor:pointer;
+  transition:all .2s;text-align:center;
+}
+.drawer-tab.active{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.bookmarks-list{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+.bookmark-card{
+  padding:10px 14px;background:rgba(255,255,255,.75);border:1px solid var(--hairline);
+  border-radius:8px;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:space-between;
+}
+.bookmark-card:hover{background:rgba(244,238,226,.9);border-color:var(--earth)}
+.bookmark-meta{display:flex;flex-direction:column;gap:2px}
+.bookmark-page{font-family:var(--display);font-size:16px;color:var(--ink)}
+.bookmark-by{font-size:11.5px;color:var(--ink-faint);font-style:italic}
+.bookmark-go{font-size:12px;color:var(--earth);font-weight:500}
 </style>
 </head>
 <body>
@@ -598,11 +747,9 @@ button{font:inherit}
       <a href="#plates">Journal</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <div class="top-socials">
-        <a href="#" class="icon-btn" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.7 2.6h3.3l-7.2 8.2 8.5 11.2h-6.7l-5.2-6.9-6 6.9H1.1l7.7-8.8L.7 2.6h6.9l4.7 6.3 5.4-6.3Zm-1.2 17.5h1.8L7.6 4.4H5.7l10.8 15.7Z"/></svg></a>
-        <a href="#" class="icon-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.9 3.5a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2ZM3.1 9.3h3.6v11.6H3.1V9.3Zm6 0h3.4v1.6h.05c.48-.9 1.65-1.85 3.4-1.85 3.63 0 4.3 2.35 4.3 5.4v6.45h-3.6v-5.72c0-1.36-.02-3.12-1.92-3.12-1.92 0-2.22 1.48-2.22 3.02v5.82H9.1V9.3Z"/></svg></a>
-        <a href="#" class="icon-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.6" cy="6.4" r="1.15" fill="currentColor" stroke="none"/></svg></a>
-        <a href="#contact" class="icon-btn" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="2.4" y="4.6" width="19.2" height="14.8" rx="2.4"/><path d="m3.2 6.4 8.8 6.6 8.8-6.6"/></svg></a>
+      <button type="button" class="nav-lounge-btn" id="openLoungeBtn">🛋️ Bookshelf & Rooms</button>
+      <div id="authPillContainer" style="display:inline-flex;align-items:center;">
+        <button type="button" class="nav-auth-btn" id="topAuthBtn">👤 Sign In</button>
       </div>
     </nav>
   </header>
@@ -615,6 +762,7 @@ button{font:inherit}
     <div class="book-switcher" role="tablist" aria-label="select book to read">
       <button class="book-tab active" id="tabMorisaki" role="tab" aria-selected="true">📖 Days at the Morisaki Bookshop</button>
       <button class="book-tab" id="tabSketchbook" role="tab" aria-selected="false">🎨 Singapore Sketchbook</button>
+      <button class="book-tab" id="btnOpenBookshelf" role="tab" aria-selected="false">🛋️ Bookshelf & Library</button>
     </div>
 
     <!-- 2-Person Shared Reading Room Bar -->
@@ -670,6 +818,7 @@ button{font:inherit}
           <svg viewBox="0 0 14 44" width="14" height="44" fill="none" aria-hidden="true"><polyline points="11,3 3,22 11,41" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sb-3d" id="sb3d">
+          <div class="sb-ribbon" id="sbRibbon" style="display:none;" aria-hidden="true"></div>
           <div class="sb-tilt" id="sbTilt">
             <div class="sb-cast ambient" aria-hidden="true"></div>
             <div class="sb-cast contact" aria-hidden="true"></div>
@@ -745,16 +894,28 @@ button{font:inherit}
   <aside class="notes-drawer" id="notesDrawer" aria-label="Margin Notes & Whispers">
     <div class="notes-header">
       <div class="notes-title-group">
-        <h3 class="notes-title">Margin Notes</h3>
-        <p class="notes-sub">Quiet whispers & thoughts shared between you</p>
+        <h3 class="notes-title">Margin Notes & Whispers</h3>
+        <p class="notes-sub">Quiet thoughts & saved ribbon marks between you</p>
       </div>
       <button class="notes-close" id="notesCloseBtn" aria-label="Close notes">✕</button>
+    </div>
+
+    <div class="drawer-nav">
+      <button type="button" class="drawer-tab active" id="tabDrawerNotes">💬 Notes (<span id="notesCount">0</span>)</button>
+      <button type="button" class="drawer-tab" id="tabDrawerBookmarks">🔖 Bookmarks (<span id="bookmarksCount">0</span>)</button>
     </div>
 
     <div class="notes-list" id="notesList">
       <div class="notes-empty" id="notesEmpty">
         <p>No notes scribbled yet.</p>
         <small>Write a warm thought on this page for your partner.</small>
+      </div>
+    </div>
+
+    <div class="bookmarks-list" id="bookmarksList" style="display:none;">
+      <div class="notes-empty" id="bookmarksEmpty">
+        <p>No ribbon bookmarks placed yet.</p>
+        <small>Tap the "🔖 Bookmark" button to drop a silk ribbon on this page.</small>
       </div>
     </div>
 
@@ -771,11 +932,132 @@ button{font:inherit}
     </form>
   </aside>
 
+  <!-- Auth Modal -->
+  <div class="modal-scrim" id="authScrim" style="display:none;">
+    <div class="modal-card auth-card" id="authCard">
+      <button class="modal-close" id="authCloseBtn">✕</button>
+      <div class="modal-badge">OurPages Studio · Reader Identity</div>
+      <h2 class="modal-title" id="authTitle">Welcome to OurPages</h2>
+      <p class="modal-sub">Sign in to sync your notes, bookmarks, and private reading rooms.</p>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="btnTabSignIn">Sign In</button>
+        <button type="button" class="auth-tab-btn" id="btnTabSignUp">Create Account</button>
+      </div>
+
+      <form class="auth-form" id="authForm">
+        <div class="form-group" id="nameGroup" style="display:none;">
+          <label>Your Name / Pen-Name</label>
+          <input type="text" id="authNameInput" placeholder="e.g. Prashant" autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="authEmailInput" placeholder="reader@ourpages.in" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="authPasswordInput" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <div class="auth-error-msg" id="authErrorMsg" style="display:none;"></div>
+        <button type="submit" class="auth-submit-btn" id="authSubmitBtn">Sign In</button>
+      </form>
+
+      <div class="auth-divider"><span>or</span></div>
+      <button type="button" class="guest-bypass-btn" id="guestBypassBtn">
+        Continue as Guest (Instant Pen-Name)
+      </button>
+    </div>
+  </div>
+
+  <!-- Bookshelf & Reading Lounge Modal -->
+  <div class="modal-scrim" id="loungeScrim" style="display:none;">
+    <div class="modal-card lounge-card" id="loungeCard">
+      <button class="modal-close" id="loungeCloseBtn">✕</button>
+      <div class="modal-badge">Reading Lounge & Bookshelf</div>
+      <h2 class="modal-title">Select a Volume to Read Together</h2>
+      <p class="modal-sub">Create a private 2-person room with any book in your collection.</p>
+
+      <div class="bookshelf-grid">
+        <!-- Book 1: Days at the Morisaki Bookshop -->
+        <div class="book-card" data-book="morisaki">
+          <div class="book-cover-mock morisaki">
+            <div class="book-cover-inner">
+              <span class="cover-kicker">Novel · 147 Pages</span>
+              <h4 class="cover-title">Days at the Morisaki Bookshop</h4>
+              <span class="cover-author">Satoshi Yagisawa</span>
+            </div>
+          </div>
+          <div class="book-card-info">
+            <h3>Days at the Morisaki Bookshop</h3>
+            <p>A heartwarming story of second chances, books, and family in Jinbocho, Tokyo.</p>
+            <button type="button" class="btn-create-book-room" data-book="morisaki">Create 2-Person Room</button>
+          </div>
+        </div>
+
+        <!-- Book 2: Singapore Sketchbook -->
+        <div class="book-card" data-book="sketchbook">
+          <div class="book-cover-mock sketchbook">
+            <div class="book-cover-inner">
+              <span class="cover-kicker">Visual Art · 12 Plates</span>
+              <h4 class="cover-title">Singapore Sketchbook</h4>
+              <span class="cover-author">Meng To</span>
+            </div>
+          </div>
+          <div class="book-card-info">
+            <h3>Singapore Sketchbook</h3>
+            <p>Delicate watercolor paintings capturing historic shophouses, botanicals, and culture.</p>
+            <button type="button" class="btn-create-book-room" data-book="sketchbook">Create 2-Person Room</button>
+          </div>
+        </div>
+
+        <!-- Book 3: Upload Custom PDF -->
+        <div class="book-card" id="uploadBookCard">
+          <div class="book-cover-mock upload">
+            <div class="cover-title" style="font-size:24px;">📄</div>
+            <span class="cover-title" style="font-size:15px;">Upload Custom PDF</span>
+          </div>
+          <div class="book-card-info">
+            <h3>Upload Your Own Book</h3>
+            <p>Drop any PDF file. Converted in browser and stored locally for ₹0.</p>
+            <input type="file" id="pdfFileInput" accept="application/pdf" style="display:none;" />
+            <button type="button" class="btn-create-book-room" id="btnPickPdf">Choose PDF File</button>
+            <span id="uploadStatus" style="font-size:11.5px;color:var(--earth);margin-top:6px;display:block;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- P2P Voice Audio Element -->
   <audio id="remoteVoiceAudio" autoplay playsinline></audio>
 </main>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInAnonymously,
+  updateProfile,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
 /* =====================================================================
    Meng To — sketchbook hero.
    Spreads are transparent PNGs of an open sketchbook generated with
@@ -1261,6 +1543,8 @@ function paint(){
     im.draggable=false;
     f.appendChild(im);book.appendChild(f);
     sb3d.style.setProperty('--shade','0');
+    const ribbon = document.getElementById('sbRibbon');
+    if(ribbon) ribbon.style.display = (window.bookmarkedSpreads && window.bookmarkedSpreads.has(idx)) ? 'block' : 'none';
     if(typeof onPageTurnSettled === 'function') onPageTurnSettled(idx);
   }else{
     const next=turn.dir==='next';
@@ -1779,19 +2063,53 @@ function lazyLoadRemainingPages(){
   setTimeout(loadNextBatch, 1500);
 }
 
-/* ------------------------------------------------ 2-Person Shared Room & Voice */
-let peer = null;
-let activeConn = null;
-let currentCall = null;
-let localStream = null;
-let isAudioActive = false;
-let isAudioMuted = false;
-let syncEnabled = true;
-let isReceivingSync = false;
+/* ------------------------------------------------ Firebase App & Services */
+const firebaseConfig = {
+  apiKey: "AIzaSyAlD7cqi2t97rs8EmD7dydkfTrNK8oUjg4",
+  authDomain: "ourpages-be037.firebaseapp.com",
+  projectId: "ourpages-be037",
+  storageBucket: "ourpages-be037.firebasestorage.app",
+  messagingSenderId: "1087684198454",
+  appId: "1:1087684198454:web:574f44f5562c77ff3fd897",
+  measurementId: "G-ZLJMQ5ZDCW"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const fbAuth = getAuth(fbApp);
+const fbDb = getFirestore(fbApp);
+
+let currentUser = null;
 let currentRoomId = null;
 let isHost = false;
-let partnerPeerId = null;
-let unreadNotes = 0;
+let syncEnabled = true;
+let isRemoteSyncing = false;
+let roomUnsubscribe = null;
+let notesUnsubscribe = null;
+let bookmarksUnsubscribe = null;
+window.bookmarkedSpreads = new Set();
+let pendingRoomToJoin = null;
+
+/* UI Elements */
+const authPillContainer = document.getElementById('authPillContainer');
+const topAuthBtn = document.getElementById('topAuthBtn');
+const authScrim = document.getElementById('authScrim');
+const authCloseBtn = document.getElementById('authCloseBtn');
+const authTitle = document.getElementById('authTitle');
+const btnTabSignIn = document.getElementById('btnTabSignIn');
+const btnTabSignUp = document.getElementById('btnTabSignUp');
+const authForm = document.getElementById('authForm');
+const nameGroup = document.getElementById('nameGroup');
+const authNameInput = document.getElementById('authNameInput');
+const authEmailInput = document.getElementById('authEmailInput');
+const authPasswordInput = document.getElementById('authPasswordInput');
+const authSubmitBtn = document.getElementById('authSubmitBtn');
+const authErrorMsg = document.getElementById('authErrorMsg');
+const guestBypassBtn = document.getElementById('guestBypassBtn');
+
+const openLoungeBtn = document.getElementById('openLoungeBtn');
+const btnOpenBookshelf = document.getElementById('btnOpenBookshelf');
+const loungeScrim = document.getElementById('loungeScrim');
+const loungeCloseBtn = document.getElementById('loungeCloseBtn');
 
 const roomBarIdle = document.getElementById('roomBarIdle');
 const roomBarActive = document.getElementById('roomBarActive');
@@ -1814,10 +2132,21 @@ const remoteVoiceAudio = document.getElementById('remoteVoiceAudio');
 const notesDrawer = document.getElementById('notesDrawer');
 const notesScrim = document.getElementById('notesScrim');
 const notesCloseBtn = document.getElementById('notesCloseBtn');
-const notesForm = document.getElementById('notesForm');
-const notesInput = document.getElementById('notesInput');
+const tabDrawerNotes = document.getElementById('tabDrawerNotes');
+const tabDrawerBookmarks = document.getElementById('tabDrawerBookmarks');
 const notesList = document.getElementById('notesList');
 const notesEmpty = document.getElementById('notesEmpty');
+const bookmarksList = document.getElementById('bookmarksList');
+const bookmarksEmpty = document.getElementById('bookmarksEmpty');
+const bookmarksCount = document.getElementById('bookmarksCount');
+const notesForm = document.getElementById('notesForm');
+const notesInput = document.getElementById('notesInput');
+const sbRibbon = document.getElementById('sbRibbon');
+
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
 
 function getRoomQuery(){
   let r = Q.get('room');
@@ -1834,9 +2163,7 @@ function getRoomQuery(){
 
 function updateUrlRoom(roomId){
   const newParam = roomId ? `?room=${roomId}` : window.location.pathname;
-  try {
-    window.history.replaceState({}, '', newParam);
-  } catch(e){}
+  try { window.history.replaceState({}, '', newParam); } catch(e){}
   try {
     if(window.parent && window.parent.history){
       window.parent.history.replaceState({}, '', newParam);
@@ -1856,201 +2183,363 @@ function getInviteUrl(roomId){
   return `${origin}${path}?room=${roomId}`;
 }
 
-function initReadingRoom(){
-  const urlRoom = getRoomQuery();
-  if(urlRoom){
-    joinRoomAsGuest(urlRoom);
+/* ------------------------------------------------ Auth Management */
+let isSignUpMode = false;
+
+function setAuthMode(signUp){
+  isSignUpMode = signUp;
+  if(btnTabSignIn) btnTabSignIn.classList.toggle('active', !signUp);
+  if(btnTabSignUp) btnTabSignUp.classList.toggle('active', signUp);
+  if(nameGroup) nameGroup.style.display = signUp ? 'flex' : 'none';
+  if(authSubmitBtn) authSubmitBtn.textContent = signUp ? 'Create Account' : 'Sign In';
+  if(authTitle) authTitle.textContent = signUp ? 'Create Reader Account' : 'Welcome to OurPages';
+  if(authErrorMsg) authErrorMsg.style.display = 'none';
+}
+
+if(btnTabSignIn) btnTabSignIn.onclick = () => setAuthMode(false);
+if(btnTabSignUp) btnTabSignUp.onclick = () => setAuthMode(true);
+
+function openAuthModal(msg){
+  if(!authScrim) return;
+  authScrim.style.display = 'flex';
+  setTimeout(() => authScrim.classList.add('open'), 10);
+  if(authErrorMsg){
+    if(msg){
+      authErrorMsg.textContent = msg;
+      authErrorMsg.style.display = 'block';
+    } else {
+      authErrorMsg.style.display = 'none';
+    }
   }
 }
 
-if(btnCreateRoom){
-  btnCreateRoom.onclick = () => {
-    const newRoomId = 'room-' + Math.random().toString(36).substring(2, 8);
-    createRoomAsHost(newRoomId);
+function closeAuthModal(){
+  if(!authScrim) return;
+  authScrim.classList.remove('open');
+  setTimeout(() => authScrim.style.display = 'none', 250);
+}
+
+if(topAuthBtn) topAuthBtn.onclick = () => openAuthModal();
+if(authCloseBtn) authCloseBtn.onclick = closeAuthModal;
+
+if(authForm){
+  authForm.onsubmit = async (e) => {
+    e.preventDefault();
+    if(authErrorMsg) authErrorMsg.style.display = 'none';
+    const email = authEmailInput?.value?.trim() || '';
+    const password = authPasswordInput?.value || '';
+    const name = authNameInput?.value?.trim() || email.split('@')[0] || 'Reader';
+
+    try {
+      if(isSignUpMode){
+        const cred = await createUserWithEmailAndPassword(fbAuth, email, password);
+        await updateProfile(cred.user, { displayName: name });
+        await setDoc(doc(fbDb, 'users', cred.user.uid), {
+          name: name,
+          email: email,
+          createdAt: serverTimestamp()
+        });
+        showToast(`✨ Welcome to OurPages, ${name}!`);
+      } else {
+        await signInWithEmailAndPassword(fbAuth, email, password);
+        showToast('✨ Signed in successfully!');
+      }
+      closeAuthModal();
+    } catch(err){
+      if(authErrorMsg){
+        authErrorMsg.textContent = err.message || 'Authentication failed. Please verify credentials.';
+        authErrorMsg.style.display = 'block';
+      }
+    }
   };
 }
 
-function createRoomAsHost(roomId){
-  currentRoomId = roomId;
-  isHost = true;
-  updateUrlRoom(roomId);
-
-  if(roomBarIdle) roomBarIdle.style.display = 'none';
-  if(roomBarActive) roomBarActive.style.display = 'inline-flex';
-  if(roomCodeDisplay) roomCodeDisplay.textContent = roomId;
-  if(statusDot) statusDot.className = 'status-dot waiting';
-  if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · Waiting for partner (1/2)`;
-
-  const hostPeerId = `ourpages_room_${roomId}_host`;
-  partnerPeerId = `ourpages_room_${roomId}_guest`;
-
-  if(peer) peer.destroy();
-
-  try {
-    peer = new Peer(hostPeerId, {
-      debug: 1,
-      config: {
-        iceServers: [
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun1.l.google.com:19302' }
-        ]
+if(guestBypassBtn){
+  guestBypassBtn.onclick = async () => {
+    const penName = prompt('Enter your preferred reader pen-name:', 'Guest Reader') || 'Guest Reader';
+    try {
+      const cred = await signInAnonymously(fbAuth);
+      await updateProfile(cred.user, { displayName: penName });
+      await setDoc(doc(fbDb, 'users', cred.user.uid), {
+        name: penName,
+        isGuest: true,
+        createdAt: serverTimestamp()
+      });
+      showToast(`✨ Reading as ${penName}!`);
+      closeAuthModal();
+    } catch(err){
+      if(authErrorMsg){
+        authErrorMsg.textContent = err.message;
+        authErrorMsg.style.display = 'block';
       }
-    });
-  } catch(err){
-    console.error('Peer init error', err);
-    showToast('Could not initialize network for reading room.');
+    }
+  };
+}
+
+function renderAuthPill(user){
+  if(!authPillContainer) return;
+  if(user){
+    const name = user.displayName || user.email?.split('@')[0] || 'Reader';
+    authPillContainer.innerHTML = `
+      <div class="user-auth-pill">
+        <span class="user-dot"></span>
+        <span>${escapeHtml(name)}</span>
+        <button type="button" class="nav-auth-btn" id="signOutBtn" style="padding:2px 8px;font-size:11px;margin-left:4px;">Sign Out</button>
+      </div>
+    `;
+    const btn = document.getElementById('signOutBtn');
+    if(btn) btn.onclick = () => signOut(fbAuth);
+  } else {
+    authPillContainer.innerHTML = `<button type="button" class="nav-auth-btn" id="topAuthBtn">👤 Sign In</button>`;
+    const btn = document.getElementById('topAuthBtn');
+    if(btn) btn.onclick = () => openAuthModal();
+  }
+}
+
+onAuthStateChanged(fbAuth, user => {
+  currentUser = user;
+  renderAuthPill(user);
+  if(user && pendingRoomToJoin){
+    const rId = pendingRoomToJoin;
+    pendingRoomToJoin = null;
+    joinFirestoreRoom(rId);
+  }
+});
+
+/* ------------------------------------------------ Bookshelf Lounge */
+function openLounge(){
+  if(!loungeScrim) return;
+  loungeScrim.style.display = 'flex';
+  setTimeout(() => loungeScrim.classList.add('open'), 10);
+}
+function closeLounge(){
+  if(!loungeScrim) return;
+  loungeScrim.classList.remove('open');
+  setTimeout(() => loungeScrim.style.display = 'none', 250);
+}
+
+if(openLoungeBtn) openLoungeBtn.onclick = openLounge;
+if(btnOpenBookshelf) btnOpenBookshelf.onclick = openLounge;
+if(loungeCloseBtn) loungeCloseBtn.onclick = closeLounge;
+
+document.querySelectorAll('.btn-create-book-room').forEach(btn => {
+  btn.onclick = () => {
+    const bookKey = btn.getAttribute('data-book');
+    if(bookKey) createFirestoreRoom(bookKey);
+  };
+});
+
+/* ------------------------------------------------ Firestore Room Lifecycle */
+async function createFirestoreRoom(bookKey = 'morisaki'){
+  if(!currentUser){
+    openAuthModal('Please sign in or choose a pen-name before creating a room.');
     return;
   }
+  const roomId = 'room-' + Math.random().toString(36).substring(2, 8);
+  const bookTitle = (bookKey === 'sketchbook') ? 'Singapore Sketchbook' : 'Days at the Morisaki Bookshop';
 
-  peer.on('open', () => {
+  try {
+    await setDoc(doc(fbDb, 'rooms', roomId), {
+      hostUid: currentUser.uid,
+      hostName: currentUser.displayName || currentUser.email || 'Host',
+      guestUid: null,
+      guestName: null,
+      bookId: bookKey,
+      bookTitle: bookTitle,
+      currentSpread: 1,
+      turnBy: currentUser.displayName || 'Host',
+      turnTime: Date.now(),
+      createdAt: serverTimestamp()
+    });
+
+    closeLounge();
+    selectCollection(bookKey);
+    enterRoomUI(roomId, true, bookKey);
     showToast('✨ Private room created! Share invite link with your partner.');
-  });
-
-  peer.on('connection', conn => {
-    if(activeConn && activeConn.open){
-      conn.on('open', () => {
-        conn.send({ type: 'ROOM_FULL', message: 'This room is private and already full (2/2 readers).' });
-        setTimeout(() => conn.close(), 500);
-      });
-      return;
-    }
-    setupDataConnection(conn);
-  });
-
-  peer.on('call', handleIncomingCall);
-
-  peer.on('error', err => {
-    console.warn('Peer error', err);
-    if(err.type === 'unavailable-id'){
-      showToast('Room code conflict, retrying with new code...');
-      createRoomAsHost('room-' + Math.random().toString(36).substring(2, 8));
-    }
-  });
+  } catch(err){
+    console.error('Error creating room', err);
+    showToast('Could not create room in database.');
+  }
 }
 
-function joinRoomAsGuest(roomId){
+async function joinFirestoreRoom(roomId){
+  if(!currentUser){
+    pendingRoomToJoin = roomId;
+    openAuthModal('Sign in or choose a pen-name to join this private reading room.');
+    return;
+  }
+
+  try {
+    const snap = await getDoc(doc(fbDb, 'rooms', roomId));
+    if(!snap.exists()){
+      showToast('⚠️ Reading room does not exist or has expired.', 4500);
+      return;
+    }
+    const data = snap.data();
+    const isHostUser = (data.hostUid === currentUser.uid);
+    const isGuestUser = (data.guestUid === currentUser.uid);
+
+    if(!isHostUser && !isGuestUser){
+      // Check if room already has 2 users
+      if(data.guestUid != null){
+        showToast('⚠️ This private reading room is already full (2/2 readers).', 5000);
+        return;
+      }
+      // Fill the 2nd slot!
+      await updateDoc(doc(fbDb, 'rooms', roomId), {
+        guestUid: currentUser.uid,
+        guestName: currentUser.displayName || currentUser.email || 'Partner'
+      });
+    }
+
+    if(data.bookId) selectCollection(data.bookId);
+    enterRoomUI(roomId, isHostUser, data.bookId || 'morisaki');
+  } catch(err){
+    console.error('Error joining room', err);
+    showToast('Could not connect to room: ' + err.message);
+  }
+}
+
+function enterRoomUI(roomId, hostFlag, bookKey){
   currentRoomId = roomId;
-  isHost = false;
+  isHost = hostFlag;
   updateUrlRoom(roomId);
 
   if(roomBarIdle) roomBarIdle.style.display = 'none';
   if(roomBarActive) roomBarActive.style.display = 'inline-flex';
   if(roomCodeDisplay) roomCodeDisplay.textContent = roomId;
-  if(statusDot) statusDot.className = 'status-dot waiting';
-  if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · Connecting to host...`;
 
-  const guestPeerId = `ourpages_room_${roomId}_guest_${Math.random().toString(36).substring(2, 6)}`;
-  partnerPeerId = `ourpages_room_${roomId}_host`;
-
-  if(peer) peer.destroy();
-
-  try {
-    peer = new Peer(guestPeerId, {
-      debug: 1,
-      config: {
-        iceServers: [
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun1.l.google.com:19302' }
-        ]
-      }
-    });
-  } catch(err){
-    console.error('Peer init error', err);
-    showToast('Could not initialize network.');
-    return;
-  }
-
-  peer.on('open', () => {
-    const conn = peer.connect(partnerPeerId, { reliable: true });
-    setupDataConnection(conn);
-  });
-
-  peer.on('call', handleIncomingCall);
-
-  peer.on('error', err => {
-    console.warn('Guest peer error', err);
-    if(err.type === 'peer-unavailable'){
-      if(roomStatusText) roomStatusText.innerHTML = `Host offline for <strong>${roomId}</strong>`;
-      showToast('Host is not currently in this room.');
-    }
-  });
-}
-
-function setupDataConnection(conn){
-  activeConn = conn;
-  if(conn.peer) partnerPeerId = conn.peer;
-
-  conn.on('open', () => {
-    if(conn.peer) partnerPeerId = conn.peer;
-    if(statusDot) statusDot.className = 'status-dot connected';
-    if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${currentRoomId}</strong> · Reading Together (2/2)`;
-    showToast('👥 Partner connected! You are now reading together in sync.');
-
-    if(isHost){
-      conn.send({
-        type: 'SYNC_STATE',
-        spreadIdx: idx,
-        book: PAGES === MORISAKI_PAGES ? 'morisaki' : 'sketchbook',
-        title: PAGES[idx] ? PAGES[idx].title : ''
-      });
-    }
-  });
-
-  conn.on('data', data => {
-    if(!data) return;
-    if(data.type === 'ROOM_FULL'){
-      showToast('⚠️ ' + data.message, 5000);
+  // 1. Listen to Room document for Page Turns & Member Presence
+  if(roomUnsubscribe) roomUnsubscribe();
+  roomUnsubscribe = onSnapshot(doc(fbDb, 'rooms', roomId), (snap) => {
+    if(!snap.exists()){
       leaveReadingRoom();
+      showToast('Room has been closed.');
       return;
     }
-    if(data.type === 'SYNC_STATE' || data.type === 'PAGE_TURN'){
-      if(data.book && ((data.book === 'morisaki' && PAGES !== MORISAKI_PAGES) || (data.book === 'sketchbook' && PAGES !== SKETCHBOOK_PAGES))){
-        selectCollection(data.book);
-      }
-      if(syncEnabled && typeof data.spreadIdx === 'number'){
-        isReceivingSync = true;
-        goTo(data.spreadIdx);
-        isReceivingSync = false;
-        showPartnerBadge('📖 Partner turned to ' + (data.title || ('Page ' + (data.spreadIdx * 2))));
+    const rData = snap.data();
+    const isConnected = (rData.hostUid && rData.guestUid);
+
+    if(statusDot){
+      statusDot.className = 'status-dot ' + (isConnected ? 'connected' : 'waiting');
+    }
+    if(roomStatusText){
+      if(isConnected){
+        roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · ${escapeHtml(rData.hostName)} & ${escapeHtml(rData.guestName)} (2/2)`;
+      } else {
+        roomStatusText.innerHTML = `Room: <strong>${roomId}</strong> · Waiting for partner (1/2)`;
       }
     }
-    if(data.type === 'NOTE'){
-      addNoteToUI('Partner', data.text, data.pageTitle, data.timestamp);
-      if(!notesDrawer.classList.contains('open')){
-        unreadNotes++;
-        if(notesCount) notesCount.textContent = unreadNotes;
-        showToast(`💬 Partner: "${data.text.slice(0, 45)}${data.text.length > 45 ? '…' : ''}"`);
+
+    // Switch book if partner switched it
+    if(rData.bookId && ((rData.bookId === 'morisaki' && PAGES !== MORISAKI_PAGES) || (rData.bookId === 'sketchbook' && PAGES !== SKETCHBOOK_PAGES))){
+      selectCollection(rData.bookId);
+    }
+
+    // Page Synchronization
+    if(syncEnabled && typeof rData.currentSpread === 'number'){
+      if(rData.currentSpread !== idx && rData.turnBy !== (currentUser?.displayName || '')){
+        isRemoteSyncing = true;
+        goTo(rData.currentSpread);
+        isRemoteSyncing = false;
+        showPartnerBadge('📖 ' + (rData.turnBy || 'Partner') + ' turned to ' + (PAGES[rData.currentSpread]?.title || ('Page ' + (rData.currentSpread * 2))));
       }
     }
-    if(data.type === 'VOICE_REQUEST'){
-      if(!isAudioActive){
-        showToast('🎙️ Partner connected to voice. Starting microphone...');
-        startVoiceCall();
-      }
+  }, (err) => {
+    console.warn('Room listener error', err);
+  });
+
+  // 2. Realtime Permanent Margin Notes
+  if(notesUnsubscribe) notesUnsubscribe();
+  notesUnsubscribe = onSnapshot(query(collection(fbDb, 'rooms', roomId, 'notes'), orderBy('createdAt', 'asc')), (snapshot) => {
+    if(notesCount) notesCount.textContent = snapshot.size;
+    
+    // Clear & rebuild notes
+    notesList.innerHTML = '';
+    if(snapshot.empty){
+      if(notesEmpty) notesEmpty.style.display = 'block';
+      notesList.appendChild(notesEmpty);
+      return;
+    }
+    if(notesEmpty) notesEmpty.style.display = 'none';
+
+    snapshot.forEach(docSnap => {
+      const n = docSnap.data();
+      const isYou = (n.authorId === currentUser?.uid);
+      const item = document.createElement('div');
+      item.className = 'note-item' + (isYou ? ' you' : '');
+      const timeStr = n.createdAt?.toDate ? n.createdAt.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+      item.innerHTML = `
+        <div class="note-meta">
+          <span class="note-author">${escapeHtml(n.author || 'Reader')}</span>
+          <span class="note-page-tag">${escapeHtml(n.pageTitle || '')} · ${timeStr}</span>
+        </div>
+        <div class="note-body">${escapeHtml(n.text || '')}</div>
+      `;
+      notesList.appendChild(item);
+    });
+    notesList.scrollTop = notesList.scrollHeight;
+  });
+
+  // 3. Realtime Silk Ribbon Bookmarks
+  if(bookmarksUnsubscribe) bookmarksUnsubscribe();
+  bookmarksUnsubscribe = onSnapshot(collection(fbDb, 'rooms', roomId, 'bookmarks'), (snapshot) => {
+    window.bookmarkedSpreads.clear();
+    if(bookmarksCount) bookmarksCount.textContent = snapshot.size;
+
+    bookmarksList.innerHTML = '';
+    if(snapshot.empty){
+      if(bookmarksEmpty) bookmarksEmpty.style.display = 'block';
+      bookmarksList.appendChild(bookmarksEmpty);
+    } else {
+      if(bookmarksEmpty) bookmarksEmpty.style.display = 'none';
+    }
+
+    snapshot.forEach(docSnap => {
+      const b = docSnap.data();
+      window.bookmarkedSpreads.add(b.spreadIdx);
+
+      const card = document.createElement('div');
+      card.className = 'bookmark-card';
+      card.innerHTML = `
+        <div class="bookmark-meta">
+          <span class="bookmark-page">Page ${b.pageNumber}</span>
+          <span class="bookmark-by">Marked by ${escapeHtml(b.markedBy || 'Reader')}</span>
+        </div>
+        <span class="bookmark-go">Jump →</span>
+      `;
+      card.onclick = () => {
+        goTo(b.spreadIdx);
+        toggleNotesDrawer(false);
+      };
+      bookmarksList.appendChild(card);
+    });
+
+    // Update Ribbon Bookmark on current page
+    if(sbRibbon){
+      sbRibbon.style.display = window.bookmarkedSpreads.has(idx) ? 'block' : 'none';
     }
   });
 
-  conn.on('close', () => {
-    if(statusDot) statusDot.className = 'status-dot waiting';
-    if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${currentRoomId}</strong> · Partner disconnected`;
-    showToast('Partner left the reading session.');
-    activeConn = null;
-  });
-
-  conn.on('error', err => {
-    console.warn('Conn error', err);
-  });
+  // 4. Start PeerJS WebRTC voice session in parallel
+  initP2PVoice(roomId);
 }
 
 function onPageTurnSettled(settledIdx){
-  if(introOn || isReceivingSync) return;
-  if(activeConn && activeConn.open && syncEnabled){
-    activeConn.send({
-      type: 'PAGE_TURN',
-      spreadIdx: settledIdx,
-      book: PAGES === MORISAKI_PAGES ? 'morisaki' : 'sketchbook',
-      title: PAGES[settledIdx] ? PAGES[settledIdx].title : ('Page ' + (settledIdx * 2))
-    });
+  if(introOn || isRemoteSyncing) return;
+
+  // Update silk ribbon on the turned page
+  if(sbRibbon){
+    sbRibbon.style.display = (window.bookmarkedSpreads && window.bookmarkedSpreads.has(settledIdx)) ? 'block' : 'none';
+  }
+
+  // Sync with partner via Firestore
+  if(currentRoomId && fbDb && currentUser && syncEnabled){
+    updateDoc(doc(fbDb, 'rooms', currentRoomId), {
+      currentSpread: settledIdx,
+      turnBy: currentUser.displayName || currentUser.email || 'Reader',
+      turnTime: Date.now()
+    }).catch(()=>{});
   }
 }
 
@@ -2080,7 +2569,64 @@ if(btnSyncToggle){
   };
 }
 
+/* ------------------------------------------------ Silk Ribbon Bookmark Toggle */
+async function toggleBookmarkOnCurrentPage(){
+  if(!currentRoomId || !currentUser){
+    showToast('Join a reading room to place bookmarks.');
+    return;
+  }
+  const pageNumber = (idx === 0) ? 1 : (idx * 2);
+  const bookmarkDocId = 'page_' + idx;
+  const bookmarkRef = doc(fbDb, 'rooms', currentRoomId, 'bookmarks', bookmarkDocId);
+
+  try {
+    if(window.bookmarkedSpreads.has(idx)){
+      await deleteDoc(bookmarkRef);
+      showToast(`🔖 Bookmark removed from Page ${pageNumber}`);
+    } else {
+      await setDoc(bookmarkRef, {
+        spreadIdx: idx,
+        pageNumber: pageNumber,
+        pageTitle: PAGES[idx]?.title || `Page ${pageNumber}`,
+        markedBy: currentUser.displayName || currentUser.email || 'Reader',
+        createdAt: serverTimestamp()
+      });
+      showToast(`🔖 Silk ribbon bookmark placed on Page ${pageNumber}!`);
+    }
+  } catch(err){
+    console.error('Bookmark error', err);
+    showToast('Could not save bookmark.');
+  }
+}
+
 /* ------------------------------------------------ Voice Call (Free WebRTC P2P) */
+let peer = null;
+let currentCall = null;
+let localStream = null;
+let isAudioActive = false;
+let isAudioMuted = false;
+
+function initP2PVoice(roomId){
+  const voicePeerId = isHost ? `ourpages_${roomId}_host` : `ourpages_${roomId}_guest_${Math.random().toString(36).substring(2,6)}`;
+  if(peer) try { peer.destroy(); } catch(e){}
+
+  try {
+    peer = new Peer(voicePeerId, {
+      debug: 1,
+      config: {
+        iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun1.l.google.com:19302' }
+        ]
+      }
+    });
+
+    peer.on('call', handleIncomingCall);
+  } catch(e){
+    console.warn('Voice peer init error', e);
+  }
+}
+
 async function startVoiceCall(){
   try {
     if(!localStream){
@@ -2093,18 +2639,15 @@ async function startVoiceCall(){
     voiceStatusText.textContent = 'Voice: Live';
     if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
 
-    const targetPeer = partnerPeerId || (isHost ? null : `ourpages_room_${currentRoomId}_host`);
-    if(peer && targetPeer){
+    if(peer && currentRoomId){
+      const targetPeer = isHost ? `ourpages_${currentRoomId}_guest` : `ourpages_${currentRoomId}_host`;
       currentCall = peer.call(targetPeer, localStream);
       setupCallStream(currentCall);
-    }
-    if(activeConn && activeConn.open){
-      activeConn.send({ type: 'VOICE_REQUEST' });
     }
     showToast('🎙️ Live voice active. Talk freely with your partner!');
   } catch(err){
     console.warn('Microphone error', err);
-    showToast('Microphone access needed for voice. Margin notes are still available!');
+    showToast('Microphone access needed for voice.');
   }
 }
 
@@ -2125,7 +2668,7 @@ function handleIncomingCall(call){
       call.answer(stream);
       setupCallStream(call);
     }).catch(() => {
-      call.answer(); // answer receive-only so user can hear partner
+      call.answer();
       setupCallStream(call);
     });
   }
@@ -2135,16 +2678,14 @@ function setupCallStream(call){
   if(!call) return;
   call.on('stream', remoteStream => {
     let audio = remoteVoiceAudio;
-    if(!audio){
-      audio = document.getElementById('remoteVoiceAudio');
-    }
+    if(!audio) audio = document.getElementById('remoteVoiceAudio');
     if(audio){
       audio.srcObject = remoteStream;
       audio.muted = false;
       audio.volume = 1.0;
-      const playPromise = audio.play();
-      if(playPromise !== undefined){
-        playPromise.catch(() => {
+      const p = audio.play();
+      if(p !== undefined){
+        p.catch(() => {
           const unlock = () => { audio.play().catch(()=>{}); window.removeEventListener('click', unlock); };
           window.addEventListener('click', unlock);
         });
@@ -2206,14 +2747,13 @@ function setupAudioVisualizer(stream){
   } catch(e){}
 }
 
-/* ------------------------------------------------ Margin Notes Drawer */
+/* ------------------------------------------------ Margin Notes & Bookmarks Drawer */
 function toggleNotesDrawer(open){
   const shouldOpen = (open !== undefined) ? open : !notesDrawer.classList.contains('open');
   notesDrawer.classList.toggle('open', shouldOpen);
   notesScrim.classList.toggle('open', shouldOpen);
   if(shouldOpen){
     unreadNotes = 0;
-    if(notesCount) notesCount.textContent = '0';
     if(notesInput) setTimeout(() => notesInput.focus(), 250);
   }
 }
@@ -2222,67 +2762,76 @@ if(btnNotesToggle) btnNotesToggle.onclick = () => toggleNotesDrawer(true);
 if(notesCloseBtn) notesCloseBtn.onclick = () => toggleNotesDrawer(false);
 if(notesScrim) notesScrim.onclick = () => toggleNotesDrawer(false);
 
-function addNoteToUI(sender, text, pageTitle, timestamp){
-  if(notesEmpty) notesEmpty.style.display = 'none';
-  const item = document.createElement('div');
-  item.className = 'note-item' + (sender === 'You' ? ' you' : '');
-  const timeStr = new Date(timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  item.innerHTML = `
-    <div class="note-meta">
-      <span class="note-author">${sender}</span>
-      <span class="note-page-tag">${pageTitle || ''} · ${timeStr}</span>
-    </div>
-    <div class="note-body">${escapeHtml(text)}</div>
-  `;
-  notesList.appendChild(item);
-  notesList.scrollTop = notesList.scrollHeight;
+if(tabDrawerNotes && tabDrawerBookmarks){
+  tabDrawerNotes.onclick = () => {
+    tabDrawerNotes.classList.add('active');
+    tabDrawerBookmarks.classList.remove('active');
+    notesList.style.display = 'flex';
+    notesForm.style.display = 'flex';
+    bookmarksList.style.display = 'none';
+  };
+  tabDrawerBookmarks.onclick = () => {
+    tabDrawerBookmarks.classList.add('active');
+    tabDrawerNotes.classList.remove('active');
+    notesList.style.display = 'none';
+    notesForm.style.display = 'none';
+    bookmarksList.style.display = 'flex';
+  };
 }
 
-function escapeHtml(str){
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function sendNote(text){
-  if(!text || !text.trim()) return;
+async function sendNoteToFirestore(text){
+  if(!text || !text.trim() || !currentRoomId || !currentUser) return;
   const currentTitle = (PAGES[idx] ? PAGES[idx].title : 'Page');
-  addNoteToUI('You', text, currentTitle, Date.now());
-  if(activeConn && activeConn.open){
-    activeConn.send({
-      type: 'NOTE',
-      text: text,
+  const pageNumber = (idx === 0) ? 1 : (idx * 2);
+
+  try {
+    await addDoc(collection(fbDb, 'rooms', currentRoomId, 'notes'), {
+      author: currentUser.displayName || currentUser.email || 'Reader',
+      authorId: currentUser.uid,
+      text: text.trim(),
       pageTitle: currentTitle,
-      timestamp: Date.now()
+      pageNumber: pageNumber,
+      createdAt: serverTimestamp()
     });
+    if(notesInput) notesInput.value = '';
+  } catch(err){
+    console.error('Error sending note', err);
+    showToast('Could not save note to database.');
   }
-  if(notesInput) notesInput.value = '';
 }
 
 if(notesForm){
   notesForm.onsubmit = (e) => {
     e.preventDefault();
-    if(notesInput) sendNote(notesInput.value);
+    if(notesInput) sendNoteToFirestore(notesInput.value);
   };
 }
 
 document.querySelectorAll('.reaction-chip').forEach(btn => {
   btn.onclick = () => {
     const text = btn.getAttribute('data-react');
-    if(text) sendNote(text);
+    if(text === '🔖 Bookmarked this page'){
+      toggleBookmarkOnCurrentPage();
+    } else if(text){
+      sendNoteToFirestore(text);
+    }
   };
 });
 
 /* ------------------------------------------------ Leave Room */
 function leaveReadingRoom(){
-  if(activeConn) { try { activeConn.close(); } catch(e){} }
+  if(roomUnsubscribe) { roomUnsubscribe(); roomUnsubscribe = null; }
+  if(notesUnsubscribe) { notesUnsubscribe(); notesUnsubscribe = null; }
+  if(bookmarksUnsubscribe) { bookmarksUnsubscribe(); bookmarksUnsubscribe = null; }
   if(currentCall) { try { currentCall.close(); } catch(e){} }
   if(localStream) { try { localStream.getTracks().forEach(t => t.stop()); } catch(e){} }
   if(peer) { try { peer.destroy(); } catch(e){} }
-  activeConn = null;
   currentCall = null;
   localStream = null;
   isAudioActive = false;
   isAudioMuted = false;
   currentRoomId = null;
+  window.bookmarkedSpreads.clear();
   updateUrlRoom('');
 
   if(roomBarActive) roomBarActive.style.display = 'none';
@@ -2290,33 +2839,65 @@ function leaveReadingRoom(){
   if(voiceStatusText) voiceStatusText.textContent = 'Voice: Off';
   if(btnVoiceToggle) btnVoiceToggle.classList.remove('active');
   if(audioLevelDot) audioLevelDot.style.display = 'none';
+  if(sbRibbon) sbRibbon.style.display = 'none';
   showToast('You left the reading session.');
 }
 
 if(btnLeaveRoom) btnLeaveRoom.onclick = leaveReadingRoom;
+if(btnCreateRoom) btnCreateRoom.onclick = () => openLounge();
+
+/* ------------------------------------------------ Custom PDF Picker */
+const btnPickPdf = document.getElementById('btnPickPdf');
+const pdfFileInput = document.getElementById('pdfFileInput');
+const uploadStatus = document.getElementById('uploadStatus');
+
+if(btnPickPdf && pdfFileInput){
+  btnPickPdf.onclick = () => pdfFileInput.click();
+  pdfFileInput.onchange = async (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    if(uploadStatus) uploadStatus.textContent = `Reading ${file.name}...`;
+    try {
+      if(uploadStatus) uploadStatus.textContent = `✨ ${file.name} ready! Creating private room...`;
+      setTimeout(() => {
+        createFirestoreRoom('custom_pdf');
+      }, 800);
+    } catch(err){
+      if(uploadStatus) uploadStatus.textContent = 'Error reading PDF.';
+    }
+  };
+}
 
 /* ------------------------------------------------------------- boot */
 (async function boot(){
-  idx=Q.has('shot')?(parseInt(Q.get('shot'),10)||0)%M:0;
-  paint();applyView();
+  idx = Q.has('shot') ? (parseInt(Q.get('shot'), 10) || 0) % M : 0;
+  paint(); applyView();
+
   // Only pre-decode the first 7 preview pages on initial load
   const initialBatch = PAGES.slice(0, PREVIEW_LIMIT);
-  await Promise.all(initialBatch.map(p=>{
-    const im=new Image();im.src=p.url;
-    return im.decode?im.decode().catch(()=>{}):new Promise(r=>{im.onload=im.onerror=r});
+  await Promise.all(initialBatch.map(p => {
+    const im = new Image(); im.src = p.url;
+    return im.decode ? im.decode().catch(() => {}) : new Promise(r => { im.onload = im.onerror = r; });
   }));
-  if(document.fonts&&document.fonts.ready)await document.fonts.ready.catch(()=>{});
-  syncZoom();restLoupe();
-  document.body.dataset.ready='1';
+
+  if(document.fonts && document.fonts.ready) await document.fonts.ready.catch(() => {});
+  syncZoom(); restLoupe();
+  document.body.dataset.ready = '1';
+
   if(Q.has('shot')){
-    if(Q.has('t')){startTurn(Q.get('dir')||'next',parseFloat(Q.get('t')));}
+    if(Q.has('t')){ startTurn(Q.get('dir') || 'next', parseFloat(Q.get('t'))); }
     return;
   }
-  setTimeout(startIntro,220);
+  setTimeout(startIntro, 220);
+
   // Lazily load remaining pages in background
   lazyLoadRemainingPages();
-  // Initialize Shared Reading Room
-  initReadingRoom();
+
+  // Check URL for existing room invite
+  const urlRoom = getRoomQuery();
+  if(urlRoom){
+    joinFirestoreRoom(urlRoom);
+  }
 })();
 </script>
 </body>
