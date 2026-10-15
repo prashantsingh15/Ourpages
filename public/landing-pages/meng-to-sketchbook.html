@@ -1978,8 +1978,10 @@ function joinRoomAsGuest(roomId){
 
 function setupDataConnection(conn){
   activeConn = conn;
+  if(conn.peer) partnerPeerId = conn.peer;
 
   conn.on('open', () => {
+    if(conn.peer) partnerPeerId = conn.peer;
     if(statusDot) statusDot.className = 'status-dot connected';
     if(roomStatusText) roomStatusText.innerHTML = `Room: <strong>${currentRoomId}</strong> · Reading Together (2/2)`;
     showToast('👥 Partner connected! You are now reading together in sync.');
@@ -2018,6 +2020,12 @@ function setupDataConnection(conn){
         unreadNotes++;
         if(notesCount) notesCount.textContent = unreadNotes;
         showToast(`💬 Partner: "${data.text.slice(0, 45)}${data.text.length > 45 ? '…' : ''}"`);
+      }
+    }
+    if(data.type === 'VOICE_REQUEST'){
+      if(!isAudioActive){
+        showToast('🎙️ Partner connected to voice. Starting microphone...');
+        startVoiceCall();
       }
     }
   });
@@ -2085,15 +2093,13 @@ async function startVoiceCall(){
     voiceStatusText.textContent = 'Voice: Live';
     if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
 
-    const targetPeer = isHost ? partnerPeerId : `ourpages_room_${currentRoomId}_host`;
+    const targetPeer = partnerPeerId || (isHost ? null : `ourpages_room_${currentRoomId}_host`);
     if(peer && targetPeer){
       currentCall = peer.call(targetPeer, localStream);
-      currentCall.on('stream', remoteStream => {
-        if(remoteVoiceAudio){
-          remoteVoiceAudio.srcObject = remoteStream;
-          remoteVoiceAudio.play().catch(()=>{});
-        }
-      });
+      setupCallStream(currentCall);
+    }
+    if(activeConn && activeConn.open){
+      activeConn.send({ type: 'VOICE_REQUEST' });
     }
     showToast('🎙️ Live voice active. Talk freely with your partner!');
   } catch(err){
@@ -2119,17 +2125,30 @@ function handleIncomingCall(call){
       call.answer(stream);
       setupCallStream(call);
     }).catch(() => {
-      call.answer();
+      call.answer(); // answer receive-only so user can hear partner
       setupCallStream(call);
     });
   }
 }
 
 function setupCallStream(call){
+  if(!call) return;
   call.on('stream', remoteStream => {
-    if(remoteVoiceAudio){
-      remoteVoiceAudio.srcObject = remoteStream;
-      remoteVoiceAudio.play().catch(()=>{});
+    let audio = remoteVoiceAudio;
+    if(!audio){
+      audio = document.getElementById('remoteVoiceAudio');
+    }
+    if(audio){
+      audio.srcObject = remoteStream;
+      audio.muted = false;
+      audio.volume = 1.0;
+      const playPromise = audio.play();
+      if(playPromise !== undefined){
+        playPromise.catch(() => {
+          const unlock = () => { audio.play().catch(()=>{}); window.removeEventListener('click', unlock); };
+          window.addEventListener('click', unlock);
+        });
+      }
     }
   });
 }
