@@ -604,24 +604,26 @@ button{font:inherit}
 
 /* ------------------------------------------------ Modals (Auth & Lounge) */
 .modal-scrim{
-  position:fixed;inset:0;background:rgba(43,39,33,.45);backdrop-filter:blur(5px);
-  z-index:98;display:flex;align-items:center;justify-content:center;
+  position:fixed;inset:0;background:rgba(43,39,33,.5);backdrop-filter:blur(6px);
+  z-index:2000;display:flex;align-items:center;justify-content:center;
   padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease;
 }
 .modal-scrim.open{opacity:1;pointer-events:auto}
 .modal-card{
   background:#fcfaf5;border:1px solid var(--hairline);border-radius:16px;
-  box-shadow:0 24px 60px rgba(43,39,33,.22);width:100%;max-width:520px;
+  box-shadow:0 24px 60px rgba(43,39,33,.26);width:100%;max-width:520px;
   max-height:90vh;overflow-y:auto;padding:32px 36px;position:relative;
   font-family:var(--font);transform:scale(.96);transition:transform .25s cubic-bezier(.16,1,.3,1);
 }
 .modal-scrim.open .modal-card{transform:scale(1)}
 .modal-close{
-  position:absolute;top:18px;right:18px;background:transparent;border:0;
-  font-size:18px;color:var(--ink-faint);cursor:pointer;padding:6px 10px;
-  border-radius:6px;transition:color .2s;
+  position:absolute;top:16px;right:16px;width:36px;height:36px;
+  background:rgba(43,39,33,.05);border:1px solid var(--hairline);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;line-height:1;color:var(--ink-soft);cursor:pointer;
+  z-index:100;transition:all .2s ease;
 }
-.modal-close:hover{color:var(--ink)}
+.modal-close:hover{background:rgba(43,39,33,.12);color:var(--ink);transform:scale(1.08)}
 .modal-badge{
   font-size:11px;letter-spacing:var(--track-caps);text-transform:uppercase;
   color:var(--earth);font-weight:600;margin-bottom:8px;
@@ -660,21 +662,9 @@ button{font:inherit}
   font-weight:500;transition:opacity .2s;margin-top:6px;
 }
 .auth-submit-btn:hover{opacity:.92}
-.auth-divider{
-  display:flex;align-items:center;text-align:center;color:var(--ink-faint);
-  font-size:12px;letter-spacing:var(--track-caps);text-transform:uppercase;margin:18px 0;
-}
-.auth-divider::before, .auth-divider::after{content:'';flex:1;border-bottom:1px solid var(--hairline)}
-.auth-divider span{padding:0 10px}
-.guest-bypass-btn{
-  width:100%;font-family:var(--font);font-size:13.5px;background:transparent;
-  border:1px dashed var(--hairline);color:var(--ink);padding:10px;border-radius:8px;
-  cursor:pointer;transition:all .2s;
-}
-.guest-bypass-btn:hover{background:rgba(43,39,33,.05);border-color:var(--ink)}
 
 /* Bookshelf Lounge Grid */
-.lounge-card{max-width:760px}
+.lounge-card{max-width:780px}
 .bookshelf-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:18px;margin-top:16px}
 .book-card{
   background:#fff;border:1px solid var(--hairline);border-radius:12px;
@@ -935,7 +925,7 @@ button{font:inherit}
   <!-- Auth Modal -->
   <div class="modal-scrim" id="authScrim" style="display:none;">
     <div class="modal-card auth-card" id="authCard">
-      <button class="modal-close" id="authCloseBtn">✕</button>
+      <button type="button" class="modal-close" id="authCloseBtn" aria-label="Close modal">✕</button>
       <div class="modal-badge">OurPages Studio · Reader Identity</div>
       <h2 class="modal-title" id="authTitle">Welcome to OurPages</h2>
       <p class="modal-sub">Sign in to sync your notes, bookmarks, and private reading rooms.</p>
@@ -961,18 +951,13 @@ button{font:inherit}
         <div class="auth-error-msg" id="authErrorMsg" style="display:none;"></div>
         <button type="submit" class="auth-submit-btn" id="authSubmitBtn">Sign In</button>
       </form>
-
-      <div class="auth-divider"><span>or</span></div>
-      <button type="button" class="guest-bypass-btn" id="guestBypassBtn">
-        Continue as Guest (Instant Pen-Name)
-      </button>
     </div>
   </div>
 
   <!-- Bookshelf & Reading Lounge Modal -->
   <div class="modal-scrim" id="loungeScrim" style="display:none;">
     <div class="modal-card lounge-card" id="loungeCard">
-      <button class="modal-close" id="loungeCloseBtn">✕</button>
+      <button type="button" class="modal-close" id="loungeCloseBtn" aria-label="Close modal">✕</button>
       <div class="modal-badge">Reading Lounge & Bookshelf</div>
       <h2 class="modal-title">Select a Volume to Read Together</h2>
       <p class="modal-sub">Create a private 2-person room with any book in your collection.</p>
@@ -2105,7 +2090,6 @@ const authEmailInput = document.getElementById('authEmailInput');
 const authPasswordInput = document.getElementById('authPasswordInput');
 const authSubmitBtn = document.getElementById('authSubmitBtn');
 const authErrorMsg = document.getElementById('authErrorMsg');
-const guestBypassBtn = document.getElementById('guestBypassBtn');
 
 const openLoungeBtn = document.getElementById('openLoungeBtn');
 const btnOpenBookshelf = document.getElementById('btnOpenBookshelf');
@@ -2203,7 +2187,7 @@ if(btnTabSignUp) btnTabSignUp.onclick = () => setAuthMode(true);
 function openAuthModal(msg){
   if(!authScrim) return;
   authScrim.style.display = 'flex';
-  setTimeout(() => authScrim.classList.add('open'), 10);
+  requestAnimationFrame(() => authScrim.classList.add('open'));
   if(authErrorMsg){
     if(msg){
       authErrorMsg.textContent = msg;
@@ -2217,11 +2201,14 @@ function openAuthModal(msg){
 function closeAuthModal(){
   if(!authScrim) return;
   authScrim.classList.remove('open');
-  setTimeout(() => authScrim.style.display = 'none', 250);
+  setTimeout(() => {
+    if(!authScrim.classList.contains('open')) authScrim.style.display = 'none';
+  }, 220);
 }
 
 if(topAuthBtn) topAuthBtn.onclick = () => openAuthModal();
-if(authCloseBtn) authCloseBtn.onclick = closeAuthModal;
+if(authCloseBtn) authCloseBtn.onclick = (e) => { e.stopPropagation(); closeAuthModal(); };
+if(authScrim) authScrim.onclick = (e) => { if(e.target === authScrim) closeAuthModal(); };
 
 if(authForm){
   authForm.onsubmit = async (e) => {
@@ -2249,28 +2236,6 @@ if(authForm){
     } catch(err){
       if(authErrorMsg){
         authErrorMsg.textContent = err.message || 'Authentication failed. Please verify credentials.';
-        authErrorMsg.style.display = 'block';
-      }
-    }
-  };
-}
-
-if(guestBypassBtn){
-  guestBypassBtn.onclick = async () => {
-    const penName = prompt('Enter your preferred reader pen-name:', 'Guest Reader') || 'Guest Reader';
-    try {
-      const cred = await signInAnonymously(fbAuth);
-      await updateProfile(cred.user, { displayName: penName });
-      await setDoc(doc(fbDb, 'users', cred.user.uid), {
-        name: penName,
-        isGuest: true,
-        createdAt: serverTimestamp()
-      });
-      showToast(`✨ Reading as ${penName}!`);
-      closeAuthModal();
-    } catch(err){
-      if(authErrorMsg){
-        authErrorMsg.textContent = err.message;
         authErrorMsg.style.display = 'block';
       }
     }
@@ -2311,20 +2276,33 @@ onAuthStateChanged(fbAuth, user => {
 function openLounge(){
   if(!loungeScrim) return;
   loungeScrim.style.display = 'flex';
-  setTimeout(() => loungeScrim.classList.add('open'), 10);
+  requestAnimationFrame(() => loungeScrim.classList.add('open'));
 }
 function closeLounge(){
   if(!loungeScrim) return;
   loungeScrim.classList.remove('open');
-  setTimeout(() => loungeScrim.style.display = 'none', 250);
+  setTimeout(() => {
+    if(!loungeScrim.classList.contains('open')) loungeScrim.style.display = 'none';
+  }, 220);
 }
 
 if(openLoungeBtn) openLoungeBtn.onclick = openLounge;
 if(btnOpenBookshelf) btnOpenBookshelf.onclick = openLounge;
-if(loungeCloseBtn) loungeCloseBtn.onclick = closeLounge;
+if(loungeCloseBtn) loungeCloseBtn.onclick = (e) => { e.stopPropagation(); closeLounge(); };
+if(loungeScrim) loungeScrim.onclick = (e) => { if(e.target === loungeScrim) closeLounge(); };
+
+// Global Escape key handler to close any open modal
+window.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' || e.key === 'Esc'){
+    closeLounge();
+    closeAuthModal();
+    toggleNotesDrawer(false);
+  }
+});
 
 document.querySelectorAll('.btn-create-book-room').forEach(btn => {
-  btn.onclick = () => {
+  btn.onclick = (e) => {
+    e.stopPropagation();
     const bookKey = btn.getAttribute('data-book');
     if(bookKey) createFirestoreRoom(bookKey);
   };
@@ -2333,7 +2311,8 @@ document.querySelectorAll('.btn-create-book-room').forEach(btn => {
 /* ------------------------------------------------ Firestore Room Lifecycle */
 async function createFirestoreRoom(bookKey = 'morisaki'){
   if(!currentUser){
-    openAuthModal('Please sign in or choose a pen-name before creating a room.');
+    closeLounge();
+    openAuthModal('Please sign in or create an account before creating a room.');
     return;
   }
   const roomId = 'room-' + Math.random().toString(36).substring(2, 8);
@@ -2444,6 +2423,16 @@ function enterRoomUI(roomId, hostFlag, bookKey){
         goTo(rData.currentSpread);
         isRemoteSyncing = false;
         showPartnerBadge('📖 ' + (rData.turnBy || 'Partner') + ' turned to ' + (PAGES[rData.currentSpread]?.title || ('Page ' + (rData.currentSpread * 2))));
+      }
+    }
+
+    // Realtime Voice Peer Sync between Host and Guest
+    const partnerVoicePeerId = isHost ? rData.guestVoicePeerId : rData.hostVoicePeerId;
+    if(partnerVoicePeerId && partnerVoicePeerId !== activePartnerVoicePeerId){
+      activePartnerVoicePeerId = partnerVoicePeerId;
+      console.log('Partner voice peer ID discovered:', activePartnerVoicePeerId);
+      if(isAudioActive && localStream && (!currentCall || !currentCall.open)){
+        connectVoiceCall(activePartnerVoicePeerId);
       }
     }
   }, (err) => {
@@ -2600,117 +2589,216 @@ async function toggleBookmarkOnCurrentPage(){
   }
 }
 
-/* ------------------------------------------------ Voice Call (Free WebRTC P2P) */
+/* ------------------------------------------------ Voice Call (PeerJS WebRTC P2P) */
 let peer = null;
 let currentCall = null;
 let localStream = null;
 let isAudioActive = false;
 let isAudioMuted = false;
+let myVoicePeerId = null;
+let activePartnerVoicePeerId = null;
 
 function initP2PVoice(roomId){
-  const voicePeerId = isHost ? `ourpages_${roomId}_host` : `ourpages_${roomId}_guest_${Math.random().toString(36).substring(2,6)}`;
-  if(peer) try { peer.destroy(); } catch(e){}
+  if(peer) {
+    try { peer.destroy(); } catch(e){}
+    peer = null;
+  }
+
+  // Create unique per-session peer ID (prevents "ID is taken" collision on page refresh)
+  const roleCode = isHost ? 'h' : 'g';
+  myVoicePeerId = `ourpages_${roomId}_${roleCode}_${Math.random().toString(36).substring(2, 7)}`;
 
   try {
-    peer = new Peer(voicePeerId, {
+    peer = new Peer(myVoicePeerId, {
       debug: 1,
       config: {
         iceServers: [
           { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun1.l.google.com:19302' }
+          { urls: 'stun:stun1.l.google.com:19302' },
+          { urls: 'stun:stun2.l.google.com:19302' },
+          { urls: 'stun:stun3.l.google.com:19302' },
+          { urls: 'stun:stun.cloudflare.com:3478' }
         ]
       }
     });
 
+    peer.on('open', (id) => {
+      console.log('PeerJS connected with ID:', id);
+      myVoicePeerId = id;
+      // Publish my voice peer ID to Firestore room document so partner can call me
+      if(currentRoomId && fbDb && currentUser){
+        const payload = isHost ? { hostVoicePeerId: id } : { guestVoicePeerId: id };
+        updateDoc(doc(fbDb, 'rooms', currentRoomId), payload).catch((err) => {
+          console.warn('Could not save peer ID to room', err);
+        });
+      }
+    });
+
     peer.on('call', handleIncomingCall);
+
+    peer.on('disconnected', () => {
+      console.log('Peer disconnected from signaling server, reconnecting...');
+      try { peer.reconnect(); } catch(e){}
+    });
+
+    peer.on('error', (err) => {
+      console.warn('Peer error:', err);
+      if(err.type === 'peer-unavailable'){
+        // Partner is not yet connected to signaling
+        if(currentCall) currentCall = null;
+      }
+    });
   } catch(e){
     console.warn('Voice peer init error', e);
   }
 }
 
-async function startVoiceCall(){
-  try {
-    if(!localStream){
-      localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setupAudioVisualizer(localStream);
-    }
-    isAudioActive = true;
-    isAudioMuted = false;
-    btnVoiceToggle.classList.add('active');
-    voiceStatusText.textContent = 'Voice: Live';
-    if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
+function connectVoiceCall(targetPeerId){
+  if(!peer || !localStream || !targetPeerId) return;
+  if(currentCall && currentCall.open) return; // already active
 
-    if(peer && currentRoomId){
-      const targetPeer = isHost ? `ourpages_${currentRoomId}_guest` : `ourpages_${currentRoomId}_host`;
-      currentCall = peer.call(targetPeer, localStream);
-      setupCallStream(currentCall);
-    }
-    showToast('🎙️ Live voice active. Talk freely with your partner!');
+  console.log('Initiating voice call to partner:', targetPeerId);
+  try {
+    const call = peer.call(targetPeerId, localStream);
+    setupCallStream(call);
   } catch(err){
-    console.warn('Microphone error', err);
-    showToast('Microphone access needed for voice.');
+    console.warn('Call attempt error:', err);
   }
 }
 
-function handleIncomingCall(call){
+async function handleIncomingCall(call){
+  console.log('Incoming voice call received from:', call.peer);
   currentCall = call;
-  if(localStream){
-    call.answer(localStream);
-    setupCallStream(call);
-  } else {
-    navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-      localStream = stream;
-      setupAudioVisualizer(stream);
+
+  if(!localStream){
+    try {
+      localStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+      setupAudioVisualizer(localStream);
       isAudioActive = true;
       isAudioMuted = false;
-      btnVoiceToggle.classList.add('active');
-      voiceStatusText.textContent = 'Voice: Live';
+      if(btnVoiceToggle) btnVoiceToggle.classList.add('active');
+      if(voiceStatusText) voiceStatusText.textContent = 'Voice: Live';
       if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
-      call.answer(stream);
-      setupCallStream(call);
-    }).catch(() => {
-      call.answer();
-      setupCallStream(call);
-    });
+      call.answer(localStream);
+    } catch(err){
+      console.warn('Mic permission not granted on incoming call, answering receive-only', err);
+      call.answer(); // answer to receive partner audio
+    }
+  } else {
+    call.answer(localStream);
   }
+
+  setupCallStream(call);
+  showToast('🎙️ Partner connected to voice! You can hear each other.');
 }
 
 function setupCallStream(call){
   if(!call) return;
+  currentCall = call;
+
   call.on('stream', remoteStream => {
+    console.log('Received remote audio stream from partner');
     let audio = remoteVoiceAudio;
     if(!audio) audio = document.getElementById('remoteVoiceAudio');
-    if(audio){
-      audio.srcObject = remoteStream;
-      audio.muted = false;
-      audio.volume = 1.0;
+    if(!audio){
+      audio = document.createElement('audio');
+      audio.id = 'remoteVoiceAudio';
+      audio.autoplay = true;
+      audio.playsinline = true;
+      document.body.appendChild(audio);
+    }
+
+    audio.srcObject = remoteStream;
+    audio.muted = false;
+    audio.volume = 1.0;
+
+    const playAudio = () => {
       const p = audio.play();
       if(p !== undefined){
-        p.catch(() => {
-          const unlock = () => { audio.play().catch(()=>{}); window.removeEventListener('click', unlock); };
-          window.addEventListener('click', unlock);
+        p.then(() => {
+          console.log('Remote audio playing successfully');
+        }).catch((err) => {
+          console.warn('Autoplay prevented by browser. Audio will play on first click.', err);
+          const unlock = () => {
+            audio.play().catch(()=>{});
+            window.removeEventListener('click', unlock);
+            window.removeEventListener('touchstart', unlock);
+            window.removeEventListener('keydown', unlock);
+          };
+          window.addEventListener('click', unlock, { once: true });
+          window.addEventListener('touchstart', unlock, { once: true });
+          window.addEventListener('keydown', unlock, { once: true });
         });
       }
-    }
+    };
+    playAudio();
+  });
+
+  call.on('close', () => {
+    console.log('Voice call ended by partner');
+    if(currentCall === call) currentCall = null;
+  });
+
+  call.on('error', (err) => {
+    console.warn('Voice call error:', err);
+    if(currentCall === call) currentCall = null;
   });
 }
 
-function toggleVoice(){
+async function toggleVoice(){
+  if(!currentRoomId){
+    showToast('Join a reading room to use voice chat.');
+    return;
+  }
+
   if(!isAudioActive){
-    startVoiceCall();
+    try {
+      if(!localStream){
+        localStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        });
+        setupAudioVisualizer(localStream);
+      }
+      isAudioActive = true;
+      isAudioMuted = false;
+      if(btnVoiceToggle) btnVoiceToggle.classList.add('active');
+      if(voiceStatusText) voiceStatusText.textContent = 'Voice: Live';
+      if(audioLevelDot) audioLevelDot.style.display = 'inline-block';
+
+      showToast('🎙️ Live voice active. Talk freely with your partner!');
+
+      if(activePartnerVoicePeerId && peer){
+        connectVoiceCall(activePartnerVoicePeerId);
+      } else {
+        showToast('🎙️ Microphone ready. Waiting for partner to connect...');
+      }
+    } catch(err){
+      console.warn('Microphone error', err);
+      showToast('Microphone access is required for voice chat.');
+    }
   } else {
     isAudioMuted = !isAudioMuted;
     if(localStream){
       localStream.getAudioTracks().forEach(t => t.enabled = !isAudioMuted);
     }
     if(isAudioMuted){
-      btnVoiceToggle.classList.remove('active');
-      voiceStatusText.textContent = 'Muted';
+      if(btnVoiceToggle) btnVoiceToggle.classList.remove('active');
+      if(voiceStatusText) voiceStatusText.textContent = 'Muted';
       if(audioLevelDot) audioLevelDot.classList.remove('speaking');
       showToast('🎙️ Microphone muted');
     } else {
-      btnVoiceToggle.classList.add('active');
-      voiceStatusText.textContent = 'Voice: Live';
+      if(btnVoiceToggle) btnVoiceToggle.classList.add('active');
+      if(voiceStatusText) voiceStatusText.textContent = 'Voice: Live';
       showToast('🎙️ Microphone unmuted');
     }
   }
@@ -2831,6 +2919,8 @@ function leaveReadingRoom(){
   localStream = null;
   isAudioActive = false;
   isAudioMuted = false;
+  myVoicePeerId = null;
+  activePartnerVoicePeerId = null;
   currentRoomId = null;
   window.bookmarkedSpreads.clear();
   updateUrlRoom('');
@@ -2851,9 +2941,22 @@ if(btnCreateRoom) btnCreateRoom.onclick = () => openLounge();
 const btnPickPdf = document.getElementById('btnPickPdf');
 const pdfFileInput = document.getElementById('pdfFileInput');
 const uploadStatus = document.getElementById('uploadStatus');
+const uploadBookCard = document.getElementById('uploadBookCard');
+
+if(uploadBookCard && pdfFileInput){
+  uploadBookCard.style.cursor = 'pointer';
+  uploadBookCard.onclick = (e) => {
+    if(e.target !== pdfFileInput){
+      pdfFileInput.click();
+    }
+  };
+}
 
 if(btnPickPdf && pdfFileInput){
-  btnPickPdf.onclick = () => pdfFileInput.click();
+  btnPickPdf.onclick = (e) => {
+    e.stopPropagation();
+    pdfFileInput.click();
+  };
   pdfFileInput.onchange = async (e) => {
     const file = e.target.files[0];
     if(!file) return;
@@ -2861,8 +2964,9 @@ if(btnPickPdf && pdfFileInput){
     try {
       if(uploadStatus) uploadStatus.textContent = `✨ ${file.name} ready! Creating private room...`;
       setTimeout(() => {
+        closeLounge();
         createFirestoreRoom('custom_pdf');
-      }, 800);
+      }, 700);
     } catch(err){
       if(uploadStatus) uploadStatus.textContent = 'Error reading PDF.';
     }
